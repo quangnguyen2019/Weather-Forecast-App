@@ -1,0 +1,40 @@
+.day-forecast {
+    &-caption {
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    &-item {
+        padding: 4px;
+        border-radius: $border-radius;
+        background-color: $gray-light;
+    }
+
+    .date {
+        text-align: center;
+        margin-bottom: 6px;
+    }
+
+    .item-img {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .day-temperature {
+        display: flex;
+        flex-direction: column;
+
+        & > span:first-child {
+            font-weight: 500;
+        }
+    }
+
+    @media screen and (max-width: 991px) {
+        .day-forecast-list {
+            flex-wrap: nowrap;
+            scroll-snap-type: x mandatory;
+            overflow-x: auto;
+        }
+    }
+}
