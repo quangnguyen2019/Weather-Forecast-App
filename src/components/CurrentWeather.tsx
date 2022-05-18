@@ -45,15 +45,15 @@ const CurrentWeather = ({ dataApp }: IProps) => {
                 </div>
                 <div className="col-2 detail-item">
                     <span>Visibility</span>
-                    <span>{curWeatherData.visibility / 1000}km</span>
+                    <span>{curWeatherData.visibility / 1000} km</span>
                 </div>
                 <div className="col-2 detail-item">
                     <span>Wind</span>
                     <span className="d-flex align-items-center">
                         {dataApp.unit === Units.C
-                            ? curWeatherData.wind_speed * 3.6
-                            : curWeatherData.wind_speed}
-                        {dataApp.unit === Units.C ? 'km/h' : 'mph'}
+                            ? Math.round(curWeatherData.wind_speed * 3.6)
+                            : Math.round(curWeatherData.wind_speed)}
+                        {dataApp.unit === Units.C ? ' km/h' : ' mph'}
 
                         <WindDirectionIcon
                             width={11}
@@ -67,10 +67,7 @@ const CurrentWeather = ({ dataApp }: IProps) => {
                 </div>
                 <div className="col-2 detail-item">
                     <span>Pressure</span>
-                    <span>
-                        {curWeatherData.pressure}
-                        {dataApp.unit === Units.C ? 'mb' : 'in'}
-                    </span>
+                    <span>{curWeatherData.pressure} hPa</span>
                 </div>
                 <div className="col-2 detail-item">
                     <span>Dew Point</span>

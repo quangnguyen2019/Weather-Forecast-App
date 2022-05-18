@@ -47,7 +47,15 @@
 }
 
 .header .unit-switch .btn-unit:active {
-  background-color: rgba(170, 170, 170, 0.404);
+  background-color: rgba(170, 170, 170, 0.24);
+}
+
+.header .unit-switch .active {
+  background-color: rgba(170, 170, 170, 0.24);
+}
+
+.header .unit-switch .active:hover {
+  background-color: rgba(170, 170, 170, 0.24);
 }
 
 .current-weather .address {

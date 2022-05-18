@@ -1,4 +1,5 @@
-import { useRef } from 'react';
+import { useState, useRef } from 'react';
+import classNames from 'classnames';
 
 import { IData, Units } from '../commonInterface';
 import { ReactComponent as SearchIcon } from '../images/Icons/search.svg';
@@ -11,6 +12,7 @@ interface IPropHeader {
 
 const Header = ({ dataApp, handleChangeUnit, getWeatherData }: IPropHeader) => {
     const inputEl = useRef<HTMLInputElement>(null);
+    const [is_C_Deg_Active, setIs_C_Deg_Active] = useState(true);
 
     const replaceWhitespace = (searchValue: string) => {
         // replace whitespace ( '\s' in regex ) with '%20'
@@ -41,6 +43,7 @@ const Header = ({ dataApp, handleChangeUnit, getWeatherData }: IPropHeader) => {
         if (unit === 'F' && dataApp.unit === Units.F) return;
 
         unit === 'C' ? handleChangeUnit(Units.C) : handleChangeUnit(Units.F);
+        setIs_C_Deg_Active(!is_C_Deg_Active);
     };
 
     return (
@@ -58,11 +61,23 @@ const Header = ({ dataApp, handleChangeUnit, getWeatherData }: IPropHeader) => {
                 </button>
             </div>
             <div className="unit-switch">
-                <button className="btn-unit" data-unit="C" onClick={changeUnit}>
+                <button
+                    data-unit="C"
+                    onClick={changeUnit}
+                    className={classNames('btn-unit', {
+                        active: is_C_Deg_Active,
+                    })}
+                >
                     &deg;C
                 </button>
                 <span> | </span>
-                <button className="btn-unit" data-unit="F" onClick={changeUnit}>
+                <button
+                    data-unit="F"
+                    onClick={changeUnit}
+                    className={classNames('btn-unit', {
+                        active: !is_C_Deg_Active,
+                    })}
+                >
                     &deg;F
                 </button>
             </div>

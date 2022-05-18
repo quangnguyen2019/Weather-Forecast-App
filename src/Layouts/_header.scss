@@ -44,7 +44,14 @@ $padding-y: 15px;
                 background: rgba(170, 170, 170, 0.171);
             }
             &:active {
-                background-color: rgba(170, 170, 170, 0.404);
+                background-color: rgba(170, 170, 170, 0.24);
+            }
+        }
+
+        .active {
+            background-color: rgba(170, 170, 170, 0.24);
+            &:hover {
+                background-color: rgba(170, 170, 170, 0.24);
             }
         }
     }
