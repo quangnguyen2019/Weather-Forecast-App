@@ -33,6 +33,7 @@ const CurrentWeather = ({ dataApp }: IProps) => {
                     </p>
                 </div>
             </div>
+
             <div className="row mt-4">
                 <div className="col-2 detail-item">
                     <span>Feels like</span>
@@ -44,16 +45,16 @@ const CurrentWeather = ({ dataApp }: IProps) => {
                 </div>
                 <div className="col-2 detail-item">
                     <span>Visibility</span>
-                    <span>
-                        {curWeatherData.visibility}
-                        {dataApp.unit === Units.C ? 'km' : 'mi'}
-                    </span>
+                    <span>{curWeatherData.visibility / 1000}km</span>
                 </div>
                 <div className="col-2 detail-item">
                     <span>Wind</span>
                     <span className="d-flex align-items-center">
-                        {curWeatherData.wind_speed}
+                        {dataApp.unit === Units.C
+                            ? curWeatherData.wind_speed * 3.6
+                            : curWeatherData.wind_speed}
                         {dataApp.unit === Units.C ? 'km/h' : 'mph'}
+
                         <WindDirectionIcon
                             width={11}
                             height={11}
