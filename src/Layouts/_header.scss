@@ -21,6 +21,7 @@ $padding-y: 15px;
         padding: $padding-x $padding-y $padding-x 0;
         border-radius: 0 $border-radius $border-radius 0;
         background-color: transparent;
+        outline: none;
     }
 
     .unit-switch {

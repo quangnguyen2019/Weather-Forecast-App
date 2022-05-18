@@ -18,6 +18,7 @@
   padding: 3px 15px 3px 0;
   border-radius: 0 12px 12px 0;
   background-color: transparent;
+  outline: none;
 }
 
 .header .unit-switch {
@@ -96,6 +97,7 @@
 .current-weather .current-description > p:first-child {
   font-size: 25px;
   font-weight: 500;
+  text-transform: capitalize;
 }
 
 .current-weather .detail-item {
