@@ -66,8 +66,13 @@ function App() {
 
                 const dataSeperated = res.data[0];
                 [lat, lon] = [dataSeperated.latitude, dataSeperated.longitude];
+
                 // store address into newAddress
-                newAddress = `${dataSeperated.name}, ${dataSeperated.region}`;
+                if (dataSeperated.county) {
+                    newAddress = `${dataSeperated.county}, ${dataSeperated.region}, ${dataSeperated.country}`;
+                } else {
+                    newAddress = `${dataSeperated.region}, ${dataSeperated.country}`;
+                }
             })
             .catch((err) => console.error(err));
 
