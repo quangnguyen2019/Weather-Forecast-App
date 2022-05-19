@@ -16,7 +16,7 @@
 .header .small-note {
   position: absolute;
   top: 36px;
-  font-size: 12px;
+  font-size: 11px;
   color: #b2b2b2;
 }
 
@@ -33,7 +33,7 @@
 .header .btn-search {
   border: 1px solid #b1b1b1;
   border-left: transparent;
-  padding: 3px 15px;
+  padding: 3px 15px 5px;
   border-radius: 0 12px 12px 0;
   background-color: transparent;
   outline: none;
@@ -99,6 +99,11 @@
   font-size: 55px;
 }
 
+.current-weather .current-temperature > span:nth-child(2) {
+  -webkit-transform: translateY(-7px);
+          transform: translateY(-7px);
+}
+
 .current-weather .current-description {
   padding-left: 30px;
   display: -webkit-box;
@@ -151,7 +156,18 @@
   font-weight: 500;
 }
 
+.day-forecast-list {
+  position: relative;
+}
+
+.day-forecast .row-forecast-list {
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  overflow: hidden;
+}
+
 .day-forecast-item {
+  scroll-snap-align: end;
   padding: 4px;
   border-radius: 12px;
   background-color: #f5f5f5;
@@ -182,20 +198,47 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .day-forecast .day-temperature > span:first-child {
   font-weight: 500;
 }
 
-@media screen and (max-width: 991px) {
-  .day-forecast .day-forecast-list {
-    -ms-flex-wrap: nowrap;
-        flex-wrap: nowrap;
-    -ms-scroll-snap-type: x mandatory;
-        scroll-snap-type: x mandatory;
-    overflow-x: auto;
-  }
+.day-forecast .btn-prev,
+.day-forecast .btn-next {
+  position: absolute;
+  display: inline-block;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  border: 1px solid #ddd;
+  background-color: transparent;
+  border-radius: 50%;
+  padding: 0 8px 2px;
+  font-weight: 500;
+  font-size: 18px;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.day-forecast .btn-prev:hover,
+.day-forecast .btn-next:hover {
+  background: #e6e6e6;
+  border: transparent;
+}
+
+.day-forecast .btn-prev {
+  left: -12px;
+}
+
+.day-forecast .btn-next {
+  right: -12px;
 }
 
 img {

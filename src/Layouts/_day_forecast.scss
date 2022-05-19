@@ -4,7 +4,17 @@
         font-weight: 500;
     }
 
+    &-list {
+        position: relative;
+    }
+
+    .row-forecast-list {
+        flex-wrap: nowrap;
+        overflow: hidden;
+    }
+
     &-item {
+        scroll-snap-align: end;
         padding: 4px;
         border-radius: $border-radius;
         background-color: $gray-light;
@@ -24,17 +34,42 @@
     .day-temperature {
         display: flex;
         flex-direction: column;
+        justify-content: center;
 
         & > span:first-child {
             font-weight: 500;
         }
     }
 
-    @media screen and (max-width: 991px) {
-        .day-forecast-list {
-            flex-wrap: nowrap;
-            scroll-snap-type: x mandatory;
-            overflow-x: auto;
+    .btn-prev,
+    .btn-next {
+        position: absolute;
+        display: inline-block;
+        width: fit-content;
+        top: 50%;
+        transform: translateY(-50%);
+        border: 1px solid #ddd;
+        background-color: transparent;
+        border-radius: 50%;
+        padding: 0 8px 2px;
+        font-weight: 500;
+        font-size: 18px;
+        transition: all 0.2s;
+
+        &:hover {
+            background: #e6e6e6;
+            border: transparent;
         }
+    }
+
+    .btn-prev {
+        left: -12px;
+    }
+
+    .btn-next {
+        right: -12px;
+    }
+
+    @media screen and (max-width: 991px) {
     }
 }
