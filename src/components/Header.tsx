@@ -1,23 +1,31 @@
 import { useState, useRef } from 'react';
 import classNames from 'classnames';
 
-import { IData, Units } from '../commonInterface';
 import { ReactComponent as SearchIcon } from '../images/Icons/search.svg';
+import { ReactComponent as GPSIcon } from '../images/Icons/gps.svg';
+import { PS_access_key, IData, Units, replaceWhitespace } from '../global';
 
 interface IPropHeader {
     dataApp: IData;
     handleChangeUnit: (newUnit: Units) => void;
     getWeatherData: (searchValue: string, unit: Units) => Promise<void>;
+    getWeatherDataFromCoord: (
+        lat: number,
+        lon: number,
+        unit: Units,
+        newAddress: string
+    ) => Promise<void>;
 }
 
-const Header = ({ dataApp, handleChangeUnit, getWeatherData }: IPropHeader) => {
+const Header = (props: IPropHeader) => {
+    const {
+        dataApp,
+        handleChangeUnit,
+        getWeatherData,
+        getWeatherDataFromCoord,
+    } = props;
     const inputEl = useRef<HTMLInputElement>(null);
     const [is_C_Deg_Active, setIs_C_Deg_Active] = useState(true);
-
-    const replaceWhitespace = (searchValue: string) => {
-        // replace whitespace ( '\s' in regex ) with '%20'
-        return searchValue.trim().replace(/\s/g, '%20');
-    };
 
     const search = async (e: any) => {
         let value = replaceWhitespace(e.target.value);
@@ -31,8 +39,38 @@ const Header = ({ dataApp, handleChangeUnit, getWeatherData }: IPropHeader) => {
     const onClickSearchBtn = () => {
         if (inputEl.current) {
             const searchValue = replaceWhitespace(inputEl.current.value);
-            getWeatherData(searchValue, dataApp.unit);
-            inputEl.current.value = '';
+
+            if (searchValue !== '') {
+                getWeatherData(searchValue, dataApp.unit);
+                inputEl.current.value = '';
+            }
+        }
+    };
+
+    const onClickDetectBtn = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(async (pos) => {
+                let newAddress = '';
+                const lat = pos.coords.latitude;
+                const lon = pos.coords.longitude;
+                const urlReverseGeocoding =
+                    `http://api.positionstack.com/v1/reverse` +
+                    `?access_key=${PS_access_key}&limit=1` +
+                    `&query=${lat},${lon}`;
+
+                await fetch(urlReverseGeocoding)
+                    .then((res) => res.json())
+                    .then((res) => {
+                        const dataSeperated = res.data[0];
+                        if (dataSeperated.county) {
+                            newAddress = `${dataSeperated.county}, ${dataSeperated.region}, ${dataSeperated.country}`;
+                        } else {
+                            newAddress = `${dataSeperated.region}, ${dataSeperated.country}`;
+                        }
+                    });
+
+                getWeatherDataFromCoord(lat, lon, dataApp.unit, newAddress);
+            });
         }
     };
 
@@ -56,10 +94,26 @@ const Header = ({ dataApp, handleChangeUnit, getWeatherData }: IPropHeader) => {
                     onKeyUp={search}
                     ref={inputEl}
                 />
-                <button className="btn-search" onClick={onClickSearchBtn}>
-                    <SearchIcon className="search-icon" width={15} />
+                <button
+                    className="btn-detect-location"
+                    onClick={onClickDetectBtn}
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="bottom"
+                    title="Detect your location"
+                >
+                    <GPSIcon width={15} height={15} />
+                </button>
+                <button
+                    className="btn-search"
+                    onClick={onClickSearchBtn}
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="bottom"
+                    title="Search for location"
+                >
+                    <SearchIcon width={15} />
                 </button>
             </div>
+
             <div className="unit-switch">
                 <button
                     data-unit="C"

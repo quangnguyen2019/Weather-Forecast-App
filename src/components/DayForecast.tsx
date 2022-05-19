@@ -1,4 +1,4 @@
-import { IData } from '../commonInterface';
+import { IData } from '../global';
 
 interface IProps {
     dataApp: IData;

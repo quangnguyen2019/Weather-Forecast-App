@@ -1,3 +1,6 @@
+export const PS_access_key = 'e783d1497d866cc660e2f1ffa5e7f0fa';
+export const Openweathermap_key = 'a3de72c34d5f784fd455b6a1dac06004';
+
 export interface IData {
     address: string;
     unit: Units;
@@ -40,3 +43,8 @@ export enum Units {
     C = 'metric',
     F = 'imperial',
 }
+
+export const replaceWhitespace = (searchValue: string) => {
+    // replace whitespace ( '\s' in regex ) with '%20'
+    return searchValue.trim().replace(/\s/g, '%20');
+};

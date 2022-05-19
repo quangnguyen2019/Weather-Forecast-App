@@ -5,11 +5,13 @@ import './App.css';
 import Header from './components/Header';
 import CurrentWeather from './components/CurrentWeather';
 import DayForecast from './components/DayForecast';
-
-import { IData, Units } from './commonInterface';
-
-const ps_access_key = 'e783d1497d866cc660e2f1ffa5e7f0fa';
-const openweathermap_key = 'a3de72c34d5f784fd455b6a1dac06004';
+import {
+    PS_access_key,
+    Openweathermap_key,
+    IData,
+    Units,
+    replaceWhitespace,
+} from './global';
 
 function App() {
     const [data, setData] = useState<IData>({
@@ -49,15 +51,16 @@ function App() {
     };
 
     const getWeatherData = async (searchValue: string, unit: Units) => {
-        let lat = '';
-        let lon = '';
+        let lat = NaN;
+        let lon = NaN;
         let newAddress = '';
 
         // Get coordinates from search value
         const urlForwardGeocoding =
             `http://api.positionstack.com/v1/forward` +
-            `?access_key=${ps_access_key}&limit=1` +
+            `?access_key=${PS_access_key}&limit=1` +
             `&query=${searchValue}`;
+        console.log(urlForwardGeocoding);
 
         await fetch(urlForwardGeocoding)
             .then((res) => res.json())
@@ -76,14 +79,22 @@ function App() {
             })
             .catch((err) => console.error(err));
 
-        if (lat === '' || lon === '') return;
+        if (lat === NaN || lon === NaN) return;
         // Get weather forecast data from obtained coordinates
+        getWeatherDataFromCoord(lat, lon, unit, newAddress);
+    };
+
+    const getWeatherDataFromCoord = async (
+        lat: number,
+        lon: number,
+        unit: Units,
+        newAddress: string
+    ) => {
         const urlForecastWeather =
             `https://api.openweathermap.org/data/2.5/onecall` +
             `?lat=${lat}&lon=${lon}&exclude=minutely,hourly` +
-            `&units=${unit}&appid=${openweathermap_key}`;
+            `&units=${unit}&appid=${Openweathermap_key}`;
 
-        console.log(urlForecastWeather);
         await fetch(urlForecastWeather)
             .then((res) => res.json())
             .then((res) => {
@@ -97,7 +108,7 @@ function App() {
     };
 
     useEffect(() => {
-        getWeatherData('Ninh Hoa', data.unit);
+        getWeatherData(replaceWhitespace('Ninh Hoa'), data.unit);
     }, []);
 
     return (
@@ -108,6 +119,7 @@ function App() {
                     dataApp={data}
                     handleChangeUnit={handleChangeUnit}
                     getWeatherData={getWeatherData}
+                    getWeatherDataFromCoord={getWeatherDataFromCoord}
                 />
                 <CurrentWeather dataApp={data} />
                 <DayForecast dataApp={data} />

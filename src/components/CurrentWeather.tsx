@@ -1,6 +1,5 @@
 import { ReactComponent as WindDirectionIcon } from '../images/Icons/arrow.svg';
-
-import { IData, Units } from '../commonInterface';
+import { IData, Units } from '../global';
 
 interface IProps {
     dataApp: IData;
