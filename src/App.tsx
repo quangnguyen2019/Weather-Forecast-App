@@ -15,7 +15,7 @@ import {
 
 function App() {
     const [data, setData] = useState<IData>({
-        address: '',
+        address: 'Ninh Hoa',
         unit: Units.C,
         weatherData: {
             current: {
@@ -51,8 +51,8 @@ function App() {
     };
 
     const getWeatherData = async (searchValue: string, unit: Units) => {
-        let lat = NaN;
-        let lon = NaN;
+        let lat = 0;
+        let lon = 0;
         let newAddress = '';
 
         // Get coordinates from search value
@@ -60,7 +60,6 @@ function App() {
             `http://api.positionstack.com/v1/forward` +
             `?access_key=${PS_access_key}&limit=1` +
             `&query=${searchValue}`;
-        console.log(urlForwardGeocoding);
 
         await fetch(urlForwardGeocoding)
             .then((res) => res.json())
@@ -79,7 +78,7 @@ function App() {
             })
             .catch((err) => console.error(err));
 
-        if (lat === NaN || lon === NaN) return;
+        if (lat === 0 || lon === 0) return;
         // Get weather forecast data from obtained coordinates
         getWeatherDataFromCoord(lat, lon, unit, newAddress);
     };
@@ -108,7 +107,7 @@ function App() {
     };
 
     useEffect(() => {
-        getWeatherData(replaceWhitespace('Ninh Hoa'), data.unit);
+        getWeatherData(replaceWhitespace(data.address), data.unit);
     }, []);
 
     return (

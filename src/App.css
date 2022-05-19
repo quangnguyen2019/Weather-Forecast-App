@@ -1,5 +1,6 @@
 .header {
   position: relative;
+  margin-bottom: 35px;
 }
 
 .header .search-box {
@@ -10,6 +11,13 @@
   outline: none;
   padding: 3px 15px;
   width: 25%;
+}
+
+.header .small-note {
+  position: absolute;
+  top: 36px;
+  font-size: 12px;
+  color: #b2b2b2;
 }
 
 .header .btn-detect-location {

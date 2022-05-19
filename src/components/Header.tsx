@@ -30,7 +30,7 @@ const Header = (props: IPropHeader) => {
     const search = async (e: any) => {
         let value = replaceWhitespace(e.target.value);
 
-        if (e.key === 'Enter' && value !== '' && inputEl.current) {
+        if (e.key === 'Enter' && value.length >= 3 && inputEl.current) {
             getWeatherData(value, dataApp.unit);
             inputEl.current.value = '';
         }
@@ -40,7 +40,7 @@ const Header = (props: IPropHeader) => {
         if (inputEl.current) {
             const searchValue = replaceWhitespace(inputEl.current.value);
 
-            if (searchValue !== '') {
+            if (searchValue.length >= 3) {
                 getWeatherData(searchValue, dataApp.unit);
                 inputEl.current.value = '';
             }
@@ -85,8 +85,8 @@ const Header = (props: IPropHeader) => {
     };
 
     return (
-        <header className="header row mb-4">
-            <div className="col d-flex justify-content-center">
+        <header className="header row">
+            <div className="col d-flex justify-content-center position-relative">
                 <input
                     type="text"
                     className="search-box"
@@ -94,6 +94,10 @@ const Header = (props: IPropHeader) => {
                     onKeyUp={search}
                     ref={inputEl}
                 />
+                <span className="small-note">
+                    The search value must be at least 3 characters
+                </span>
+
                 <button
                     className="btn-detect-location"
                     onClick={onClickDetectBtn}
