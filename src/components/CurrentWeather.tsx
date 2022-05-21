@@ -7,12 +7,14 @@ interface IProps {
 
 const CurrentWeather = ({ dataApp }: IProps) => {
     const curWeatherData = dataApp.weatherData.current;
+    const today = dataApp.weatherData.daily[0];
+    const currentHour = new Date(curWeatherData.dt).getHours();
 
     return (
         <section className="current-weather">
             <div className="row gx-0">
                 <p className="address mb-4"> {dataApp.address} </p>
-                <div className="col-2 col-md-1">
+                <div className="col-3 col-sm-2 col-lg-1">
                     <img
                         src={`http://openweathermap.org/img/wn/${curWeatherData.weather[0].icon}@2x.png`}
                         alt=""
@@ -27,26 +29,28 @@ const CurrentWeather = ({ dataApp }: IProps) => {
                 <div className="col-6 current-description">
                     <p>{curWeatherData.weather[0].description}</p>
                     <p>
-                        The high will reach{' '}
-                        {Math.round(dataApp.weatherData.daily[0].temp.max)}&deg;
+                        {currentHour < 17
+                            ? 'The high will reach ' + Math.round(today.temp.max)
+                            : 'The low will be ' + Math.round(today.temp.min)}
+                        &deg;
                     </p>
                 </div>
             </div>
 
-            <div className="row mt-4">
-                <div className="col-2 detail-item">
+            <div className="row mt-4 gy-3">
+                <div className="col-4 col-sm-3 col-md-2 detail-item">
                     <span>Feels like</span>
                     <span>{Math.round(curWeatherData.feels_like)}&deg;</span>
                 </div>
-                <div className="col-2 detail-item">
+                <div className="col-4 col-sm-3 col-md-2 detail-item">
                     <span>Humidity</span>
                     <span>{curWeatherData.humidity}%</span>
                 </div>
-                <div className="col-2 detail-item">
+                <div className="col-4 col-sm-3 col-md-2 detail-item">
                     <span>Visibility</span>
                     <span>{curWeatherData.visibility / 1000} km</span>
                 </div>
-                <div className="col-2 detail-item">
+                <div className="col-4 col-sm-3 col-md-2 detail-item">
                     <span>Wind</span>
                     <span className="d-flex align-items-center">
                         {dataApp.unit === Units.C
@@ -64,11 +68,11 @@ const CurrentWeather = ({ dataApp }: IProps) => {
                         />
                     </span>
                 </div>
-                <div className="col-2 detail-item">
+                <div className="col-4 col-sm-3 col-md-2 detail-item">
                     <span>Pressure</span>
                     <span>{curWeatherData.pressure} hPa</span>
                 </div>
-                <div className="col-2 detail-item">
+                <div className="col-4 col-sm-3 col-md-2 detail-item">
                     <span>Dew Point</span>
                     <span>{Math.round(curWeatherData.dew_point)}&deg;</span>
                 </div>
