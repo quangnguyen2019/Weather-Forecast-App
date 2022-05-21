@@ -148,7 +148,13 @@
 
 .current-weather .detail-item > span:nth-child(2) {
   font-weight: 500;
-  font-size: 17px;
+  font-size: 18px;
+}
+
+@media screen and (max-width: 991px) {
+  .current-weather .detail-item > span:nth-child(2) {
+    font-size: 17px;
+  }
 }
 
 .day-forecast-caption {
@@ -239,6 +245,10 @@
 
 .day-forecast .btn-next {
   right: -12px;
+}
+
+.chart-container {
+  position: relative;
 }
 
 img {

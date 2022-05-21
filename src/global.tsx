@@ -6,6 +6,7 @@ export interface IData {
     unit: Units;
     weatherData: {
         current: {
+            dt: number;
             temp: number;
             feels_like: number;
             pressure: number;
@@ -21,6 +22,13 @@ export interface IData {
                 }
             ];
         };
+        hourly: [
+            {
+                dt: number;
+                temp: number;
+                pop: number;
+            }
+        ];
         daily: [
             {
                 dt: number;

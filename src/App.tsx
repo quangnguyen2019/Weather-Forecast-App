@@ -19,6 +19,7 @@ function App() {
         unit: Units.C,
         weatherData: {
             current: {
+                dt: 0,
                 dew_point: 0,
                 feels_like: 0,
                 humidity: 0,
@@ -29,6 +30,7 @@ function App() {
                 visibility: 0,
                 weather: [{ description: '', icon: '' }],
             },
+            hourly: [{ dt: 0, temp: 0, pop: 0 }],
             daily: [
                 {
                     dt: 0,
@@ -91,8 +93,10 @@ function App() {
     ) => {
         const urlForecastWeather =
             `https://api.openweathermap.org/data/2.5/onecall` +
-            `?lat=${lat}&lon=${lon}&exclude=minutely,hourly` +
+            `?lat=${lat}&lon=${lon}&exclude=minutely` +
             `&units=${unit}&appid=${Openweathermap_key}`;
+
+        console.log(urlForecastWeather);
 
         await fetch(urlForecastWeather)
             .then((res) => res.json())

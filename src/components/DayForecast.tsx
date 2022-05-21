@@ -1,6 +1,5 @@
-import classNames from 'classnames';
-import { useState } from 'react';
 import { IData } from '../global';
+import WeatherChart from './WeatherChart';
 
 interface IProps {
     dataApp: IData;
@@ -28,14 +27,14 @@ const DayForecast = ({ dataApp }: IProps) => {
     const scrollPrev = () => {
         const list = document.querySelector('.row-forecast-list');
         if (list) {
-            list.scrollLeft -= 300;
+            list.scrollLeft -= 400;
         }
     };
 
     const scrollNext = (e: any) => {
         const list = document.querySelector('.row-forecast-list');
         if (list) {
-            list.scrollLeft += 300;
+            list.scrollLeft += 400;
         }
     };
 
@@ -75,6 +74,7 @@ const DayForecast = ({ dataApp }: IProps) => {
                     </button>
                 </div>
             </div>
+            <WeatherChart dataApp={dataApp} />
         </section>
     );
 };
