@@ -3,10 +3,18 @@
 @import './Layouts/current_weather';
 @import './Layouts/day_forecast';
 @import './Layouts/weather_chart';
+@import './Layouts/air_pollution';
 
 img {
     max-width: 100%;
     max-height: 100%;
+}
+
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .App {
@@ -39,5 +47,10 @@ img {
         padding: 20px 30px;
         overflow-y: auto;
         text-shadow: 0 0 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .caption {
+        text-transform: uppercase;
+        font-weight: 500;
     }
 }

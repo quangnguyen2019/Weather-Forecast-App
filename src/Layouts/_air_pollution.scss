@@ -1,0 +1,39 @@
+.air-pollution-info {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 12px;
+    max-width: 70%;
+    position: relative;
+
+    &::before {
+        content: '';
+        border-radius: inherit;
+        position: absolute;
+        inset: 0;
+        background-color: currentColor;
+        opacity: 0.2;
+    }
+
+    .index {
+        font-size: 30px;
+        font-weight: 500;
+        color: currentColor;
+        margin-right: 25px;
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column;
+
+        & > span:first-child {
+            font-weight: 500;
+            color: currentColor;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        & > span:nth-child(2) {
+            color: #b4b0b0;
+        }
+    }
+}

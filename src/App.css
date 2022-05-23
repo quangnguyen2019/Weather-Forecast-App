@@ -157,11 +157,6 @@
   }
 }
 
-.day-forecast-caption {
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
 .day-forecast-list {
   position: relative;
 }
@@ -251,9 +246,67 @@
   position: relative;
 }
 
+.air-pollution-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px 20px;
+  border-radius: 12px;
+  max-width: 70%;
+  position: relative;
+}
+
+.air-pollution-info::before {
+  content: '';
+  border-radius: inherit;
+  position: absolute;
+  inset: 0;
+  background-color: currentColor;
+  opacity: 0.2;
+}
+
+.air-pollution-info .index {
+  font-size: 30px;
+  font-weight: 500;
+  color: currentColor;
+  margin-right: 25px;
+}
+
+.air-pollution-info .info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.air-pollution-info .info > span:first-child {
+  font-weight: 500;
+  color: currentColor;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.air-pollution-info .info > span:nth-child(2) {
+  color: #b4b0b0;
+}
+
 img {
   max-width: 100%;
   max-height: 100%;
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 .App {
@@ -292,5 +345,10 @@ img {
   padding: 20px 30px;
   overflow-y: auto;
   text-shadow: 0 0 8px rgba(0, 0, 0, 0.04);
+}
+
+.App .caption {
+  text-transform: uppercase;
+  font-weight: 500;
 }
 /*# sourceMappingURL=App.css.map */

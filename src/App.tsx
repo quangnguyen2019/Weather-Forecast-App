@@ -5,6 +5,7 @@ import './App.css';
 import Header from './components/Header';
 import CurrentWeather from './components/CurrentWeather';
 import DayForecast from './components/DayForecast';
+import AirPollution from './components/AirPollution';
 import {
     PS_access_key,
     Openweathermap_key,
@@ -12,12 +13,15 @@ import {
     Units,
     replaceWhitespace,
 } from './global';
+import { HashLoader } from 'react-spinners';
 
 function App() {
     const [data, setData] = useState<IData>({
         address: 'Ninh Hoa',
         unit: Units.C,
         weatherData: {
+            lat: 0,
+            lon: 0,
             current: {
                 dt: 0,
                 dew_point: 0,
@@ -96,8 +100,6 @@ function App() {
             `?lat=${lat}&lon=${lon}&exclude=minutely` +
             `&units=${unit}&appid=${Openweathermap_key}`;
 
-        console.log(urlForecastWeather);
-
         await fetch(urlForecastWeather)
             .then((res) => res.json())
             .then((res) => {
@@ -114,20 +116,31 @@ function App() {
         getWeatherData(replaceWhitespace(data.address), data.unit);
     }, []);
 
+    console.log('App render');
+
     return (
-        <div className="App">
-            <div className="app-background"></div>
-            <div className="container app-container">
-                <Header
-                    dataApp={data}
-                    handleChangeUnit={handleChangeUnit}
-                    getWeatherData={getWeatherData}
-                    getWeatherDataFromCoord={getWeatherDataFromCoord}
-                />
-                <CurrentWeather dataApp={data} />
-                <DayForecast dataApp={data} />
-            </div>
-        </div>
+        <>
+            {data.weatherData.lat === 0 ? (
+                <div className="spinner">
+                    <HashLoader color={'#5C9AF5'} size={60} />
+                </div>
+            ) : (
+                <div className="App">
+                    <div className="app-background"></div>
+                    <div className="container app-container">
+                        <Header
+                            dataApp={data}
+                            handleChangeUnit={handleChangeUnit}
+                            getWeatherData={getWeatherData}
+                            getWeatherDataFromCoord={getWeatherDataFromCoord}
+                        />
+                        <CurrentWeather dataApp={data} />
+                        <DayForecast dataApp={data} />
+                        <AirPollution dataApp={data} />
+                    </div>
+                </div>
+            )}
+        </>
     );
 }
 
