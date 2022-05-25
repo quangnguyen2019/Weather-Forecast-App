@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { AirVisual_key, IData } from '../global';
+
+import { IData, Openweathermap_key } from '../global';
+import { ReactComponent as WindIcon } from '../images/Icons/wind.svg';
 
 interface IProps {
     dataApp: IData;
@@ -10,81 +12,80 @@ const aqiLevels = {
         level: 'Good',
         desc: 'Air quality is satisfactory, and air pollution poses little or no risk.',
     },
+    fair: {
+        level: 'Fair',
+        desc: 'Air quality is acceptable. Members of sensitive groups may experience health effects.',
+    },
     moderate: {
         level: 'Moderate',
-        desc: 'Air quality is acceptable. However, there may be a risk for some people, particularly those who are unusually sensitive to air pollution.',
+        desc: 'Members of sensitive groups may experience health effects.',
     },
-    sensitive: {
-        level: 'Unhealthy for Sensitive Groups',
-        desc: 'Members of sensitive groups may experience health effects. The general public is less likely to be affected.',
+    poor: {
+        level: 'Poor',
+        desc: 'Health warnings of emergency conditions.',
     },
-    unhealthy: {
-        level: 'Unhealthy',
-        desc: 'Some members of the general public may experience health effects; members of sensitive groups may experience more serious health effects.',
-    },
-    veryUnhealthy: {
-        level: 'Very Healthy',
-        desc: 'Health alert: The risk of health effects is increased for everyone.',
-    },
-    hazardous: {
-        level: 'Hazardous',
-        desc: 'Health warning of emergency conditions: everyone is more likely to be affected.',
+    veryPoor: {
+        level: 'Very Poor',
+        desc: 'Health alert: everyone may experience more serious health effects',
     },
 };
 
 const AirPollution = ({ dataApp }: IProps) => {
     const [airQualityData, setAirQualityData] = useState({
-        aqi: 0,
+        components: {
+            co: 0,
+            no2: 0,
+            o3: 0,
+            so2: 0,
+            pm2_5: 0,
+            pm10: 0,
+        },
         info: { level: '', desc: '' },
         color: '',
     });
 
     const getAirQualityData = async () => {
-        const urlAirPollution =
-            `http://api.airvisual.com/v2/nearest_city` +
-            `?lat=${dataApp.weatherData.lat}&lon=${dataApp.weatherData.lon}` +
-            `&key=${AirVisual_key}`;
+        const urlAirPollution = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${dataApp.weatherData.lat}&lon=${dataApp.weatherData.lon}&appid=${Openweathermap_key}`;
 
         try {
             const response1 = await fetch(urlAirPollution);
             const response2 = await response1.json();
-            const aqi = response2.data.current.pollution.aqius;
 
-            if (aqi >= 0 && aqi <= 50) {
+            const components = response2.list[0].components;
+            delete components.co;
+            delete components.nh3;
+
+            const aqi = response2.list[0].main.aqi;
+
+            if (aqi === 1) {
                 setAirQualityData({
-                    aqi,
+                    components,
                     info: aqiLevels.good,
-                    color: '#a8e05f',
+                    color: '#05d75a',
                 });
-            } else if (aqi >= 51 && aqi <= 100) {
+            } else if (aqi === 2) {
                 setAirQualityData({
-                    aqi,
-                    info: aqiLevels.moderate,
+                    components,
+                    info: aqiLevels.fair,
                     color: '#fdd64b',
                 });
-            } else if (aqi >= 101 && aqi <= 150) {
+            } else if (aqi === 3) {
                 setAirQualityData({
-                    aqi,
-                    info: aqiLevels.sensitive,
+                    components,
+                    info: aqiLevels.moderate,
                     color: 'orange',
                 });
-            } else if (aqi >= 151 && aqi <= 200) {
+            } else if (aqi === 4) {
                 setAirQualityData({
-                    aqi,
-                    info: aqiLevels.unhealthy,
-                    color: '#f20303',
+                    components,
+                    info: aqiLevels.poor,
+                    color: '#e10303',
                 });
-            } else if (aqi >= 201 && aqi <= 300) {
+            } else if (aqi === 5) {
                 setAirQualityData({
-                    aqi,
-                    info: aqiLevels.veryUnhealthy,
+                    components,
+                    info: aqiLevels.veryPoor,
                     color: '#ad00ad',
-                });
-            } else {
-                setAirQualityData({
-                    aqi,
-                    info: aqiLevels.hazardous,
-                    color: '#a20101',
                 });
             }
         } catch {
@@ -97,17 +98,43 @@ const AirPollution = ({ dataApp }: IProps) => {
     }, [dataApp]);
 
     return (
-        <div className="air-pollution mt-5">
-            <p className="caption"> Air Quality Index </p>
-            <div
-                className="air-pollution-info"
-                style={{ color: `${airQualityData.color}` }}
-            >
-                <span className="index">{airQualityData.aqi}</span>
-                <div className="info">
-                    <span>{airQualityData.info.level}</span>
-                    <span>{airQualityData.info.desc}</span>
+        <div
+            className="air-pollution"
+            style={{ color: `${airQualityData.color}` }}
+        >
+            <h5 className="air-pollution-caption"> Air Quality Index </h5>
+            <div className="evaluation row align-items-center gx-0">
+                <div className="col-2 d-flex justify-content-center">
+                    <WindIcon
+                        width={40}
+                        height={40}
+                        fill={airQualityData.color}
+                    />
                 </div>
+                <div className="col-10">
+                    <div className="evaluation-info mx-3">
+                        <span>{airQualityData.info.level}</span>
+                        <span>{airQualityData.info.desc}</span>
+                    </div>
+                </div>
+            </div>
+            <div className="components row gx-2">
+                {Object.keys(airQualityData.components).map((key, index) => {
+                    return (
+                        <div className="col" key={index}>
+                            <div className="component-item">
+                                <span>
+                                    {
+                                        airQualityData.components[
+                                            key as keyof typeof airQualityData.components
+                                        ]
+                                    }
+                                </span>
+                                <span>{key}</span>
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

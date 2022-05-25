@@ -1,9 +1,8 @@
 import { Chart, registerables } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
+// import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 import { IData } from '../global';
-import { useState } from 'react';
 
 interface IInitialValue {
     times: string[];
@@ -11,10 +10,10 @@ interface IInitialValue {
     pop: number[]; //  Probability of precipitation
 }
 
-Chart.register(...registerables, ChartDataLabels);
+Chart.register(...registerables);
 
 const WeatherChart = ({ dataApp }: { dataApp: IData }) => {
-    const [isDataset2Hidden, setIsDataset2Hidden] = useState(true);
+    // const [isDataset2Hidden, setIsDataset2Hidden] = useState(true);
     const hourlyData = dataApp.weatherData.hourly;
     const timesTempsPops = hourlyData.reduce(
         (total, data, index) => {
@@ -32,11 +31,23 @@ const WeatherChart = ({ dataApp }: { dataApp: IData }) => {
         { times: [], temps: [], pop: [] } as IInitialValue
     );
 
-    const numLabelsDisplayed = 12;
+    const numLabelsDisplayed = 10;
     const timeLabels = timesTempsPops.times.slice(0, numLabelsDisplayed);
     timeLabels[0] = 'Now';
     const tempDataNested = timesTempsPops.temps.slice(0, numLabelsDisplayed);
     const popDataNested = timesTempsPops.pop.slice(0, numLabelsDisplayed);
+
+    const legendMarginBottom = {
+        id: 'legendMarginBottom',
+        beforeInit(chart: any) {
+            const fitValue = chart.legend.fit;
+
+            chart.legend.fit = function fit() {
+                fitValue.bind(chart.legend)();
+                return (this.height += 2);
+            };
+        },
+    };
 
     return (
         <div className="chart-container">
@@ -52,14 +63,14 @@ const WeatherChart = ({ dataApp }: { dataApp: IData }) => {
                             borderColor: '#dc3545',
                             backgroundColor: 'rgba(255,0,0,0.5)',
                             tension: 0.4,
-                            fill: true,
-                            datalabels: {
-                                align: 'end',
-                                anchor: 'end',
-                                backgroundColor: '#dc3545',
-                                formatter: (value) => Math.round(value) + '°',
-                            },
-                            hidden: !isDataset2Hidden,
+                            fill: false,
+                            // datalabels: {
+                            //     align: 'end',
+                            //     anchor: 'end',
+                            //     backgroundColor: '#dc3545',
+                            //     formatter: (value) => Math.round(value) + '°',
+                            // },
+                            // hidden: !isDataset2Hidden,
                         },
                         {
                             label: 'Precipitation ( % )',
@@ -67,14 +78,14 @@ const WeatherChart = ({ dataApp }: { dataApp: IData }) => {
                             borderColor: '#36a2eb',
                             backgroundColor: '#36a2eb80',
                             tension: 0.4,
-                            fill: true,
-                            datalabels: {
-                                align: 'right',
-                                anchor: 'center',
-                                backgroundColor: '#36a2eb',
-                                formatter: (value) => Math.round(value) + '%',
-                            },
-                            hidden: isDataset2Hidden,
+                            fill: false,
+                            // datalabels: {
+                            //     align: 'end',
+                            //     anchor: 'end',
+                            //     backgroundColor: '#36a2eb',
+                            //     formatter: (value) => Math.round(value) + '%',
+                            // },
+                            // hidden: isDataset2Hidden,
                         },
                     ],
                 }}
@@ -83,36 +94,34 @@ const WeatherChart = ({ dataApp }: { dataApp: IData }) => {
                         x: {
                             grid: { display: false },
                         },
-                        x1: {
-                            position: 'bottom',
-                            grid: { display: false },
-                        },
-                        y: {
-                            position: 'left',
-                        },
                     },
                     layout: {
                         padding: {
-                            top: 50,
+                            // top: 4,
                         },
                     },
                     plugins: {
                         legend: {
-                            onClick: () => {
-                                setIsDataset2Hidden(!isDataset2Hidden);
+                            labels: {
+                                boxWidth: 15,
+                                boxHeight: 10,
                             },
+                            // onClick: () => {
+                            //     setIsDataset2Hidden(!isDataset2Hidden);
+                            // },
                         },
-                        datalabels: {
-                            borderRadius: 4,
-                            color: 'white',
-                            font: {
-                                weight: 'bold',
-                            },
-                            padding: 6,
-                        },
+                        // datalabels: {
+                        //     borderRadius: 4,
+                        //     color: 'white',
+                        //     font: {
+                        //         weight: 'bold',
+                        //     },
+                        //     // padding: 6,
+                        // },
                     },
                 }}
-                plugins={[ChartDataLabels]}
+                // plugins={[ChartDataLabels]}
+                plugins={[legendMarginBottom]}
             />
         </div>
     );

@@ -1,4 +1,6 @@
-import { ReactComponent as WindDirectionIcon } from '../images/Icons/arrow.svg';
+import { ReactComponent as TemperatureIcon } from '../images/Icons/temperature.svg';
+import { ReactComponent as HumidityIcon } from '../images/Icons/humidity.svg';
+import { ReactComponent as MapPositionIcon } from '../images/Icons/map-position.svg';
 import { IData, Units } from '../global';
 
 interface IProps {
@@ -13,20 +15,28 @@ const CurrentWeather = ({ dataApp }: IProps) => {
     return (
         <section className="current-weather">
             <div className="row gx-0">
-                <p className="address mb-4"> {dataApp.address} </p>
-                <div className="col-3 col-sm-2 col-lg-1">
+                <p className="address mb-2">
+                    <MapPositionIcon
+                        width={20}
+                        height={20}
+                        fill={'#fff'}
+                        style={{ marginRight: 8 }}
+                    />
+                    {dataApp.address}
+                </p>
+                <div className="col-12 current-image">
                     <img
                         src={`http://openweathermap.org/img/wn/${curWeatherData.weather[0].icon}@2x.png`}
                         alt=""
                     />
                 </div>
-                <div className="col-2 col-md-1 current-temperature mx-3">
+                <div className="col-12 current-temperature">
                     <span className="temperature-number">
-                        {Math.round(curWeatherData.temp)}
+                        {Math.round(curWeatherData.temp)}&deg;
                     </span>
-                    <span> &deg;{dataApp.unit === Units.C ? 'C' : 'F'} </span>
+                    {/* <span> &deg;{dataApp.unit === Units.C ? 'C' : 'F'} </span> */}
                 </div>
-                <div className="col-6 current-description">
+                <div className="col-12 current-description">
                     <p>{curWeatherData.weather[0].description}</p>
                     <p>
                         {currentHour < 17
@@ -37,44 +47,24 @@ const CurrentWeather = ({ dataApp }: IProps) => {
                 </div>
             </div>
 
-            <div className="row mt-4 gy-3">
-                <div className="col-4 col-sm-3 col-md-2 detail-item">
-                    <span>Feels like</span>
-                    <span>{Math.round(curWeatherData.feels_like)}&deg;</span>
-                </div>
-                <div className="col-4 col-sm-3 col-md-2 detail-item">
-                    <span>Humidity</span>
-                    <span>{curWeatherData.humidity}%</span>
-                </div>
-                <div className="col-4 col-sm-3 col-md-2 detail-item">
-                    <span>Visibility</span>
-                    <span>{curWeatherData.visibility / 1000} km</span>
-                </div>
-                <div className="col-4 col-sm-3 col-md-2 detail-item">
-                    <span>Wind</span>
-                    <span className="d-flex align-items-center">
-                        {dataApp.unit === Units.C
-                            ? Math.round(curWeatherData.wind_speed * 3.6)
-                            : Math.round(curWeatherData.wind_speed)}
-                        {dataApp.unit === Units.C ? ' km/h' : ' mph'}
-
-                        <WindDirectionIcon
-                            width={11}
-                            height={11}
-                            style={{
-                                marginLeft: 10,
-                                transform: `rotate(${curWeatherData.wind_deg}deg)`,
-                            }}
-                        />
+            <div className="mt-3">
+                <div className="row detail-item">
+                    <div className="col">
+                        <TemperatureIcon width={18} height={18} fill={'#fff'} />
+                        <span> Feels </span>
+                    </div>
+                    <span className="col-auto"> | </span>
+                    <span className="col">
+                        {Math.round(curWeatherData.feels_like)}&deg;
                     </span>
                 </div>
-                <div className="col-4 col-sm-3 col-md-2 detail-item">
-                    <span>Pressure</span>
-                    <span>{curWeatherData.pressure} hPa</span>
-                </div>
-                <div className="col-4 col-sm-3 col-md-2 detail-item">
-                    <span>Dew Point</span>
-                    <span>{Math.round(curWeatherData.dew_point)}&deg;</span>
+                <div className="row detail-item">
+                    <div className="col">
+                        <HumidityIcon width={18} height={18} fill={'#fff'} />
+                        <span> Hum </span>
+                    </div>
+                    <span className="col-auto"> | </span>
+                    <span className="col">{curWeatherData.humidity}%</span>
                 </div>
             </div>
         </section>

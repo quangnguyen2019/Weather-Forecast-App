@@ -1,0 +1,35 @@
+.unit-switch {
+    position: absolute;
+    width: fit-content;
+    right: 1%;
+    background-color: #fff;
+    padding: 1px 8px;
+    border-radius: 20px;
+
+    .btn-unit {
+        border-radius: 50%;
+        border: transparent;
+        padding: 5px 10px;
+        background-color: transparent;
+        transition: all 0.2s;
+        outline: none;
+
+        &:hover {
+            background: rgba(170, 170, 170, 0.171);
+        }
+        &:active {
+            background-color: rgba(170, 170, 170, 0.24);
+        }
+    }
+
+    .margin-right {
+        margin-right: 5px;
+    }
+
+    .active {
+        background-color: rgba(170, 170, 170, 0.24);
+        &:hover {
+            background-color: rgba(170, 170, 170, 0.24);
+        }
+    }
+}

@@ -6,18 +6,21 @@
     .row-forecast-list {
         flex-wrap: nowrap;
         overflow: hidden;
+        padding: 10px 0;
     }
 
     &-item {
         scroll-snap-align: end;
         padding: 4px;
         border-radius: $border-radius;
-        background-color: $gray-light;
+        background-color: #fff;
+        box-shadow: $box-shadow;
     }
 
     .date {
         text-align: center;
         margin-bottom: 6px;
+        font-weight: 500;
     }
 
     .item-img {

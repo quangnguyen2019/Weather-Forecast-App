@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
+import { HashLoader } from 'react-spinners';
 
 import './App.css';
 
 import Header from './components/Header';
 import CurrentWeather from './components/CurrentWeather';
 import DayForecast from './components/DayForecast';
+import WeatherChart from './components/WeatherChart';
 import AirPollution from './components/AirPollution';
+import SearchBox from './components/SeachBox';
 import {
     PS_access_key,
     Openweathermap_key,
@@ -13,7 +16,7 @@ import {
     Units,
     replaceWhitespace,
 } from './global';
-import { HashLoader } from 'react-spinners';
+import DetailInfo from './components/DetailInfo';
 
 function App() {
     const [data, setData] = useState<IData>({
@@ -25,6 +28,7 @@ function App() {
             current: {
                 dt: 0,
                 dew_point: 0,
+                uvi: 0,
                 feels_like: 0,
                 humidity: 0,
                 pressure: 0,
@@ -76,8 +80,11 @@ function App() {
                 [lat, lon] = [dataSeperated.latitude, dataSeperated.longitude];
 
                 // store address into newAddress
-                if (dataSeperated.county) {
-                    newAddress = `${dataSeperated.county}, ${dataSeperated.region}, ${dataSeperated.country}`;
+                if (
+                    dataSeperated.county &&
+                    dataSeperated.county !== dataSeperated.region
+                ) {
+                    newAddress = `${dataSeperated.county}, ${dataSeperated.region}`;
                 } else {
                     newAddress = `${dataSeperated.region}, ${dataSeperated.country}`;
                 }
@@ -116,8 +123,6 @@ function App() {
         getWeatherData(replaceWhitespace(data.address), data.unit);
     }, []);
 
-    console.log('App render');
-
     return (
         <>
             {data.weatherData.lat === 0 ? (
@@ -126,17 +131,46 @@ function App() {
                 </div>
             ) : (
                 <div className="App">
-                    <div className="app-background"></div>
-                    <div className="container app-container">
-                        <Header
-                            dataApp={data}
-                            handleChangeUnit={handleChangeUnit}
-                            getWeatherData={getWeatherData}
-                            getWeatherDataFromCoord={getWeatherDataFromCoord}
-                        />
-                        <CurrentWeather dataApp={data} />
-                        <DayForecast dataApp={data} />
-                        <AirPollution dataApp={data} />
+                    <div className="container-fluid app-container">
+                        <div className="row h-100">
+                            <div className="col-9 right-part py-4 px-5">
+                                <Header
+                                    dataApp={data}
+                                    handleChangeUnit={handleChangeUnit}
+                                    getWeatherData={getWeatherData}
+                                    getWeatherDataFromCoord={
+                                        getWeatherDataFromCoord
+                                    }
+                                />
+                                <DayForecast dataApp={data} />
+
+                                <div className="row mt-1 mb-3">
+                                    <div className="col">
+                                        <DetailInfo dataApp={data} />
+                                    </div>
+                                </div>
+
+                                <div className="row gx-2">
+                                    <div className="col-6">
+                                        <WeatherChart dataApp={data} />
+                                    </div>
+                                    <div className="col-6">
+                                        <AirPollution dataApp={data} />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-3 left-part py-4 px-4">
+                                <SearchBox
+                                    dataApp={data}
+                                    getWeatherData={getWeatherData}
+                                    getWeatherDataFromCoord={
+                                        getWeatherDataFromCoord
+                                    }
+                                />
+                                <CurrentWeather dataApp={data} />
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}

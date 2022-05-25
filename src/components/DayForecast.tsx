@@ -1,5 +1,4 @@
 import { IData } from '../global';
-import WeatherChart from './WeatherChart';
 
 interface IProps {
     dataApp: IData;
@@ -39,8 +38,7 @@ const DayForecast = ({ dataApp }: IProps) => {
     };
 
     return (
-        <section className="day-forecast mt-5">
-            <p className="caption"> 8 day forecast </p>
+        <section className="day-forecast mt-4">
             <div className="day-forecast-list">
                 <div className="row gx-2 row-forecast-list">
                     {dailyWeatherData.map((data, index) => (
@@ -74,7 +72,6 @@ const DayForecast = ({ dataApp }: IProps) => {
                     </button>
                 </div>
             </div>
-            <WeatherChart dataApp={dataApp} />
         </section>
     );
 };
