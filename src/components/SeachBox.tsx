@@ -14,10 +14,16 @@ interface IProps {
         unit: Units,
         newAddress: string
     ) => Promise<void>;
+    checkAddressExists: (newAddress: string) => boolean;
 }
 
 const SearchBox = (props: IProps) => {
-    const { dataApp, getWeatherData, getWeatherDataFromCoord } = props;
+    const {
+        dataApp,
+        getWeatherData,
+        getWeatherDataFromCoord,
+        checkAddressExists,
+    } = props;
     const inputEl = useRef<HTMLInputElement>(null);
 
     const search = async (e: any) => {
@@ -65,7 +71,10 @@ const SearchBox = (props: IProps) => {
                         }
                     });
 
-                getWeatherDataFromCoord(lat, lon, dataApp.unit, newAddress);
+                let isExisted = checkAddressExists(newAddress);
+                if (!isExisted) {
+                    getWeatherDataFromCoord(lat, lon, dataApp.unit, newAddress);
+                }
             });
         }
     };

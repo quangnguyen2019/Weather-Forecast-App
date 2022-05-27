@@ -585,13 +585,13 @@ img {
   color: #363e64;
 }
 
-.App .app-container .right-part {
+.App .app-container .left-part {
   background: #f0f5ff;
   overflow-y: scroll;
   height: 100vh;
 }
 
-.App .app-container .left-part {
+.App .app-container .right-part {
   overflow-y: scroll;
   height: 100vh;
   position: relative;

@@ -46,13 +46,13 @@ img {
         height: 100%;
         color: $dark-blue;
 
-        .right-part {
+        .left-part {
             background: #f0f5ff;
             overflow-y: scroll;
             height: 100vh;
         }
 
-        .left-part {
+        .right-part {
             overflow-y: scroll;
             height: 100vh;
             position: relative;

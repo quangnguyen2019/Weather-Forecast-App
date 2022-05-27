@@ -66,7 +66,6 @@ function App() {
         let lat = 0;
         let lon = 0;
         let newAddress = '';
-        let isExisted = false;
 
         // Get coordinates from search value
         const urlForwardGeocoding =
@@ -97,7 +96,17 @@ function App() {
         // Check error when lat === 0 || lon === 0
         if (lat === 0 || lon === 0) return;
 
-        // Check location already exists?
+        // Check address already exists?
+        let isExisted = checkAddressExists(newAddress);
+        if (!isExisted) {
+            // Get weather forecast data from obtained coordinates
+            getWeatherDataFromCoord(lat, lon, unit, newAddress);
+        }
+    };
+
+    const checkAddressExists = (newAddress: string) => {
+        let isExisted = false;
+
         data.forEach((obj, index) => {
             if (obj.address === newAddress) {
                 // location already exists
@@ -112,10 +121,7 @@ function App() {
             }
         });
 
-        // Get weather forecast data from obtained coordinates
-        if (!isExisted) {
-            getWeatherDataFromCoord(lat, lon, unit, newAddress);
-        }
+        return isExisted;
     };
 
     const getWeatherDataFromCoord = async (
@@ -160,8 +166,6 @@ function App() {
         getWeatherData(replaceWhitespace(data[0].address), data[0].unit);
     }, []);
 
-    console.log(data);
-
     return (
         <>
             {data[0].weatherData.lat === 0 ? (
@@ -172,7 +176,7 @@ function App() {
                 <div className="App">
                     <div className="container-fluid app-container">
                         <div className="row h-100">
-                            <div className="col-9 right-part py-4 px-5">
+                            <div className="col-9 left-part py-4 px-5">
                                 <Header
                                     dataApp={data[0]}
                                     handleChangeUnit={handleChangeUnit}
@@ -195,13 +199,14 @@ function App() {
                                 </div>
                             </div>
 
-                            <div className="col-3 left-part py-4 px-4">
+                            <div className="col-3 right-part py-4 px-4">
                                 <SearchBox
                                     dataApp={data[0]}
                                     getWeatherData={getWeatherData}
                                     getWeatherDataFromCoord={
                                         getWeatherDataFromCoord
                                     }
+                                    checkAddressExists={checkAddressExists}
                                 />
                                 <CurrentWeather
                                     dataApp={data}
