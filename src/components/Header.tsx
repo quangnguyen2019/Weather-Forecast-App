@@ -5,13 +5,6 @@ import UnitSwitch from './UnitSwitch';
 interface IPropHeader {
     dataApp: IData;
     handleChangeUnit: (newUnit: Units) => void;
-    getWeatherData: (searchValue: string, unit: Units) => Promise<void>;
-    getWeatherDataFromCoord: (
-        lat: number,
-        lon: number,
-        unit: Units,
-        newAddress: string
-    ) => Promise<void>;
 }
 
 const Header = (props: IPropHeader) => {

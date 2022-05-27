@@ -115,24 +115,40 @@
 }
 
 .current-weather {
+  color: white;
+}
+
+.current-weather .first-card {
   text-align: center;
   border-radius: 12px;
-  color: white;
   background-color: #6f9fff;
   padding: 24px 20px;
   position: relative;
 }
 
+.current-weather .following-card {
+  background-color: #524e46;
+  border-radius: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+}
+
 .current-weather .address {
   font-weight: 500;
   font-size: 17px;
-  text-align: left;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.current-weather .address--smaller {
+  font-size: 13px;
+  -webkit-box-pack: right;
+      -ms-flex-pack: right;
+          justify-content: right;
 }
 
 .current-weather .current-image {
@@ -167,6 +183,13 @@
           transform: translateY(-7px);
 }
 
+.current-weather .temperature-number-smaller {
+  font-size: 1.6rem;
+  font-weight: 500;
+  text-align: right;
+  display: block;
+}
+
 .current-weather .current-description {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -198,12 +221,13 @@
 }
 
 .current-weather .detail-item {
-  padding: 5px 36px;
+  font-size: 0.95em;
+  font-weight: 500;
 }
 
 .current-weather .detail-item > .col:first-child {
-  text-align: center;
-  font-weight: 500;
+  text-align: right;
+  border-right: 1px solid;
 }
 
 .current-weather .detail-item > .col:first-child > span {
@@ -212,6 +236,55 @@
 
 .current-weather .detail-item > .col:last-child {
   text-align: left;
+}
+
+.current-weather .button-options {
+  background-color: transparent;
+  border: none;
+  padding: 0 6px;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  outline: none;
+}
+
+.current-weather .button-options:active svg {
+  fill: #c4c4c4;
+}
+
+.current-weather .button-options .button-remove {
+  position: absolute;
+  top: 19px;
+  right: 2px;
+  background: #fff;
+  padding: 5px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 6rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-transition: all 0.1s;
+  transition: all 0.1s;
+}
+
+.current-weather .button-options .button-remove:hover {
+  background: #bdc2db;
+}
+
+.current-weather .button-disable svg {
+  fill: transparent;
+}
+
+.current-weather .button-disable:active svg {
+  fill: transparent;
 }
 
 @media screen and (max-width: 991px) {
@@ -506,8 +579,7 @@ img {
 
 .App .app-container {
   background-color: white;
-  border-radius: 12px;
-  overflow-y: auto;
+  overflow: hidden;
   text-shadow: 0 0 8px rgba(0, 0, 0, 0.04);
   height: 100%;
   color: #363e64;
@@ -515,5 +587,31 @@ img {
 
 .App .app-container .right-part {
   background: #f0f5ff;
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+.App .app-container .left-part {
+  overflow-y: scroll;
+  height: 100vh;
+  position: relative;
+}
+
+.App ::-webkit-scrollbar {
+  width: 10px;
+  position: absolute;
+}
+
+.App ::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 9999px;
+  background-color: rgba(128, 128, 128, 0.664);
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.App ::-webkit-scrollbar-thumb:hover {
+  background-color: #8f8f8f;
 }
 /*# sourceMappingURL=App.css.map */

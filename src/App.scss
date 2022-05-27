@@ -41,14 +41,38 @@ img {
 
     .app-container {
         background-color: rgb(255, 255, 255);
-        border-radius: $border-radius;
-        overflow-y: auto;
+        overflow: hidden;
         text-shadow: 0 0 8px rgba(0, 0, 0, 0.04);
         height: 100%;
         color: $dark-blue;
 
         .right-part {
             background: #f0f5ff;
+            overflow-y: scroll;
+            height: 100vh;
+        }
+
+        .left-part {
+            overflow-y: scroll;
+            height: 100vh;
+            position: relative;
+        }
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+        position: absolute;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border: 2px solid transparent;
+        background-clip: padding-box;
+        border-radius: 9999px;
+        background-color: rgba(128, 128, 128, 0.664);
+        transition: all 0.2s;
+
+        &:hover {
+            background-color: rgb(143, 143, 143);
         }
     }
 }

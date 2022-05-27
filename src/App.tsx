@@ -19,51 +19,54 @@ import {
 import DetailInfo from './components/DetailInfo';
 
 function App() {
-    const [data, setData] = useState<IData>({
-        address: 'Ninh Hoa',
-        unit: Units.C,
-        weatherData: {
-            lat: 0,
-            lon: 0,
-            current: {
-                dt: 0,
-                dew_point: 0,
-                uvi: 0,
-                feels_like: 0,
-                humidity: 0,
-                pressure: 0,
-                temp: 0,
-                wind_speed: 0,
-                wind_deg: 0,
-                visibility: 0,
-                weather: [{ description: '', icon: '' }],
-            },
-            hourly: [{ dt: 0, temp: 0, pop: 0 }],
-            daily: [
-                {
+    const [data, setData] = useState<IData[]>([
+        {
+            address: 'Ninh Hoa',
+            unit: Units.C,
+            weatherData: {
+                lat: 0,
+                lon: 0,
+                current: {
                     dt: 0,
-                    temp: {
-                        max: 0,
-                        min: 0,
-                    },
+                    dew_point: 0,
+                    uvi: 0,
+                    feels_like: 0,
+                    humidity: 0,
+                    pressure: 0,
+                    temp: 0,
+                    wind_speed: 0,
+                    wind_deg: 0,
+                    visibility: 0,
                     weather: [{ description: '', icon: '' }],
                 },
-            ],
+                hourly: [{ dt: 0, temp: 0, pop: 0 }],
+                daily: [
+                    {
+                        dt: 0,
+                        temp: {
+                            max: 0,
+                            min: 0,
+                        },
+                        weather: [{ description: '', icon: '' }],
+                    },
+                ],
+            },
         },
-    });
+    ]);
 
     const handleChangeUnit = (newUnit: Units) => {
         setData((prevData) => ({
             ...prevData,
             unit: newUnit,
         }));
-        getWeatherData(data.address, newUnit);
+        getWeatherData(data[0].address, newUnit);
     };
 
     const getWeatherData = async (searchValue: string, unit: Units) => {
         let lat = 0;
         let lon = 0;
         let newAddress = '';
+        let isExisted = false;
 
         // Get coordinates from search value
         const urlForwardGeocoding =
@@ -91,9 +94,28 @@ function App() {
             })
             .catch((err) => console.error(err));
 
+        // Check error when lat === 0 || lon === 0
         if (lat === 0 || lon === 0) return;
+
+        // Check location already exists?
+        data.forEach((obj, index) => {
+            if (obj.address === newAddress) {
+                // location already exists
+                isExisted = true;
+
+                const tempData = [
+                    obj,
+                    ...data.slice(0, index),
+                    ...data.slice(index + 1),
+                ];
+                setData(tempData);
+            }
+        });
+
         // Get weather forecast data from obtained coordinates
-        getWeatherDataFromCoord(lat, lon, unit, newAddress);
+        if (!isExisted) {
+            getWeatherDataFromCoord(lat, lon, unit, newAddress);
+        }
     };
 
     const getWeatherDataFromCoord = async (
@@ -110,22 +132,39 @@ function App() {
         await fetch(urlForecastWeather)
             .then((res) => res.json())
             .then((res) => {
-                setData((prevData) => ({
+                // Delete initial value
+                if (data.length === 1 && data[0].weatherData.lat === 0) {
+                    setData([
+                        {
+                            ...data[0],
+                            address: newAddress,
+                            weatherData: res,
+                        },
+                    ]);
+                    return;
+                }
+
+                setData((prevData) => [
+                    {
+                        unit: prevData[0].unit,
+                        address: newAddress,
+                        weatherData: res,
+                    },
                     ...prevData,
-                    address: newAddress,
-                    weatherData: res,
-                }));
+                ]);
             })
             .catch((err) => console.error(err));
     };
 
     useEffect(() => {
-        getWeatherData(replaceWhitespace(data.address), data.unit);
+        getWeatherData(replaceWhitespace(data[0].address), data[0].unit);
     }, []);
+
+    console.log(data);
 
     return (
         <>
-            {data.weatherData.lat === 0 ? (
+            {data[0].weatherData.lat === 0 ? (
                 <div className="spinner">
                     <HashLoader color={'#5C9AF5'} size={60} />
                 </div>
@@ -135,40 +174,39 @@ function App() {
                         <div className="row h-100">
                             <div className="col-9 right-part py-4 px-5">
                                 <Header
-                                    dataApp={data}
+                                    dataApp={data[0]}
                                     handleChangeUnit={handleChangeUnit}
-                                    getWeatherData={getWeatherData}
-                                    getWeatherDataFromCoord={
-                                        getWeatherDataFromCoord
-                                    }
                                 />
-                                <DayForecast dataApp={data} />
+                                <DayForecast dataApp={data[0]} />
 
                                 <div className="row mt-1 mb-3">
                                     <div className="col">
-                                        <DetailInfo dataApp={data} />
+                                        <DetailInfo dataApp={data[0]} />
                                     </div>
                                 </div>
 
                                 <div className="row gx-2">
                                     <div className="col-6">
-                                        <WeatherChart dataApp={data} />
+                                        <WeatherChart dataApp={data[0]} />
                                     </div>
                                     <div className="col-6">
-                                        <AirPollution dataApp={data} />
+                                        <AirPollution dataApp={data[0]} />
                                     </div>
                                 </div>
                             </div>
 
                             <div className="col-3 left-part py-4 px-4">
                                 <SearchBox
-                                    dataApp={data}
+                                    dataApp={data[0]}
                                     getWeatherData={getWeatherData}
                                     getWeatherDataFromCoord={
                                         getWeatherDataFromCoord
                                     }
                                 />
-                                <CurrentWeather dataApp={data} />
+                                <CurrentWeather
+                                    dataApp={data}
+                                    setDataApp={setData}
+                                />
                             </div>
                         </div>
                     </div>

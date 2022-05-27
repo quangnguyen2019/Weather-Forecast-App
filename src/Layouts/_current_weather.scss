@@ -1,17 +1,31 @@
 .current-weather {
-    text-align: center;
-    border-radius: $border-radius;
     color: white;
-    background-color: $blue;
-    padding: 24px 20px;
-    position: relative;
+
+    .first-card {
+        text-align: center;
+        border-radius: $border-radius;
+        background-color: $blue;
+        padding: 24px 20px;
+        position: relative;
+    }
+
+    .following-card {
+        background-color: #524e46;
+        border-radius: $border-radius;
+        padding: 12px 16px;
+        cursor: pointer;
+    }
 
     .address {
         font-weight: 500;
         font-size: 17px;
-        text-align: left;
         display: flex;
         align-items: center;
+
+        &--smaller {
+            font-size: 13px;
+            justify-content: right;
+        }
     }
 
     .current-image {
@@ -38,6 +52,13 @@
         }
     }
 
+    .temperature-number-smaller {
+        font-size: 1.6rem;
+        font-weight: 500;
+        text-align: right;
+        display: block;
+    }
+
     .current-description {
         display: flex;
         flex-direction: column;
@@ -60,11 +81,12 @@
     }
 
     .detail-item {
-        padding: 5px 36px;
+        font-size: 0.95em;
+        font-weight: 500;
 
         > .col:first-child {
-            text-align: center;
-            font-weight: 500;
+            text-align: right;
+            border-right: 1px solid;
         }
 
         > .col:first-child > span {
@@ -73,6 +95,48 @@
 
         > .col:last-child {
             text-align: left;
+        }
+    }
+
+    .button-options {
+        background-color: transparent;
+        border: none;
+        padding: 0 6px;
+        position: relative;
+        display: flex;
+        outline: none;
+
+        &:active svg {
+            fill: rgb(196, 196, 196);
+        }
+
+        .button-remove {
+            position: absolute;
+            top: 19px;
+            right: 2px;
+            background: #fff;
+            padding: 5px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            width: 6rem;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            transition: all 0.1s;
+
+            &:hover {
+                background: $light-blue;
+            }
+        }
+    }
+
+    .button-disable {
+        svg {
+            fill: transparent;
+        }
+
+        &:active svg {
+            fill: transparent;
         }
     }
 
