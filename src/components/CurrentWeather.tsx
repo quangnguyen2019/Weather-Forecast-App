@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 import { ReactComponent as TemperatureIcon } from '../images/Icons/temperature.svg';
@@ -14,7 +14,6 @@ interface IProps {
 }
 
 const CurrentWeather = ({ dataApp, setDataApp }: IProps) => {
-    const btnDropdownRef = useRef(null);
     const [dropdowns, setDropdowns] = useState(
         dataApp.map(() => ({ isOpen: false }))
     );
@@ -65,22 +64,38 @@ const CurrentWeather = ({ dataApp, setDataApp }: IProps) => {
         setDropdowns(tempDropdowns);
     };
 
-    useEffect(() => {
-        const handleClickOutside = ({ target }: MouseEvent) => {
-            if (
-                target instanceof HTMLElement &&
-                btnDropdownRef.current &&
-                !(btnDropdownRef.current as HTMLElement).contains(target)
-            ) {
-                console.log('set state handle outside');
-            }
-        };
+    const handleClickOutside = ({ target }: MouseEvent) => {
+        const arrButtonDropdowns = Array.from(
+            document.querySelectorAll('.button-options')
+        );
 
-        document.addEventListener('mouseup', handleClickOutside);
+        let indexDropdown = -1;
+        dropdowns.every((obj, index) => {
+            if (obj.isOpen) {
+                indexDropdown = index;
+                return false;
+            }
+            return true;
+        });
+
+        if (
+            indexDropdown !== -1 &&
+            !arrButtonDropdowns[indexDropdown].contains(target as HTMLElement)
+        ) {
+            setDropdowns([
+                ...dropdowns.slice(0, indexDropdown),
+                { isOpen: false },
+                ...dropdowns.slice(indexDropdown + 1),
+            ]);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
         return () => {
-            document.removeEventListener('mouseup', handleClickOutside);
+            document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [btnDropdownRef]);
+    }, [handleClickOutside]);
 
     // update dropdowns state when dataApp changed
     useEffect(() => {
@@ -107,7 +122,6 @@ const CurrentWeather = ({ dataApp, setDataApp }: IProps) => {
                             })}
                             data-index="0"
                             onClick={onClickDropdownBtn}
-                            ref={btnDropdownRef}
                             disabled={dataApp.length === 1}
                         >
                             <CaretDownIcon width={10} height={10} fill={'#fff'} />
@@ -222,7 +236,6 @@ const CurrentWeather = ({ dataApp, setDataApp }: IProps) => {
                                         className="button-options"
                                         data-index={index + 1}
                                         onClick={onClickDropdownBtn}
-                                        ref={btnDropdownRef}
                                     >
                                         <CaretDownIcon
                                             width={10}

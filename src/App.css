@@ -249,7 +249,7 @@
   outline: none;
 }
 
-.current-weather .button-options:active svg {
+.current-weather .button-options:active > svg {
   fill: #c4c4c4;
 }
 
@@ -273,10 +273,12 @@
           align-items: center;
   -webkit-transition: all 0.1s;
   transition: all 0.1s;
+  z-index: 10;
 }
 
 .current-weather .button-options .button-remove:hover {
   background: #bdc2db;
+  color: white;
 }
 
 .current-weather .button-disable svg {

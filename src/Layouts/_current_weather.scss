@@ -106,7 +106,7 @@
         display: flex;
         outline: none;
 
-        &:active svg {
+        &:active > svg {
             fill: rgb(196, 196, 196);
         }
 
@@ -123,9 +123,11 @@
             justify-content: space-evenly;
             align-items: center;
             transition: all 0.1s;
+            z-index: 10;
 
             &:hover {
                 background: $light-blue;
+                color: white;
             }
         }
     }
