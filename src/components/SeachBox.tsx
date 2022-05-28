@@ -104,8 +104,6 @@ const SearchBox = (props: IProps) => {
             <button
                 className="btn-search"
                 onClick={onClickSearchBtn}
-                data-bs-toggle="tooltip"
-                data-bs-placement="bottom"
                 title="Search for location"
             >
                 <SearchIcon width={15} />

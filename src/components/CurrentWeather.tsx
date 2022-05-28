@@ -226,12 +226,14 @@ const CurrentWeather = ({ dataApp, setDataApp }: IProps) => {
                             <div className="col-5">
                                 <p className="address address--smaller mb-1">
                                     <MapPositionIcon
-                                        width={16}
-                                        height={16}
+                                        width={17}
+                                        height={17}
                                         fill={'#fff'}
                                         style={{ marginRight: 6 }}
                                     />
-                                    {data.address.split(',')[0]}
+                                    <span title={data.address.split(',')[0]}>
+                                        {data.address.split(',')[0]}
+                                    </span>
                                     <button
                                         className="button-options"
                                         data-index={index + 1}

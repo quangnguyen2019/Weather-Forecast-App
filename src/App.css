@@ -151,6 +151,13 @@
           justify-content: right;
 }
 
+.current-weather .address--smaller > span {
+  max-width: 4rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .current-weather .current-image {
   text-align: center;
 }
@@ -241,12 +248,18 @@
 .current-weather .button-options {
   background-color: transparent;
   border: none;
-  padding: 0 6px;
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   outline: none;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  margin-left: 2px;
+}
+
+.current-weather .button-options:hover > svg {
+  fill: rgba(255, 255, 255, 0.788);
 }
 
 .current-weather .button-options:active > svg {
