@@ -6,7 +6,7 @@ import { ReactComponent as HumidityIcon } from '../images/Icons/humidity.svg';
 import { ReactComponent as MapPositionIcon } from '../images/Icons/map-position.svg';
 import { ReactComponent as CaretDownIcon } from '../images/Icons/caret-down-fill.svg';
 import { ReactComponent as TrashIcon } from '../images/Icons/trash3.svg';
-import { IData } from '../global';
+import { IData, Units } from '../global';
 
 interface IProps {
     dataApp: IData[];
@@ -144,9 +144,11 @@ const CurrentWeather = ({ dataApp, setDataApp }: IProps) => {
                     </div>
                     <div className="col-12 current-temperature">
                         <span className="temperature-number">
-                            {Math.round(curWeatherData.temp)}&deg;
+                            {Math.round(curWeatherData.temp)}
                         </span>
-                        {/* <span> &deg;{dataApp.unit === Units.C ? 'C' : 'F'} </span> */}
+                        <span>
+                            &deg;{dataApp[0].unit === Units.C ? 'C' : 'F'}
+                        </span>
                     </div>
                     <div className="col-12 current-description">
                         <p>{curWeatherData.weather[0].description}</p>

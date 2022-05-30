@@ -27,7 +27,7 @@ const DetailInfo = ({ dataApp }: IProps) => {
             <div className="row">
                 <div className="col">
                     <div className="detail-line-item">
-                        <SunIcon width={25} height={25} fill={'#e6e604'} />
+                        <SunIcon width={22} height={22} fill={'#e6e604'} />
                         <div className="item-info">
                             <span className="title">Sunrise</span>
                             <span className="value">04:25 AM</span>
@@ -37,7 +37,7 @@ const DetailInfo = ({ dataApp }: IProps) => {
 
                 <div className="col">
                     <div className="detail-line-item">
-                        <MoonIcon width={25} height={25} fill={'#1a6bba'} />
+                        <MoonIcon width={22} height={22} fill={'#1a6bba'} />
                         <div className="item-info">
                             <span className="title">Sunset</span>
                             <span className="value">04:25 PM</span>
@@ -47,7 +47,7 @@ const DetailInfo = ({ dataApp }: IProps) => {
 
                 <div className="col">
                     <div className="detail-line-item">
-                        <VisibilityIcon width={25} height={25} fill={'#082541'} />
+                        <VisibilityIcon width={22} height={22} fill={'#082541'} />
                         <div className="item-info">
                             <span className="title">Visibility</span>
                             <span className="value">
@@ -59,7 +59,7 @@ const DetailInfo = ({ dataApp }: IProps) => {
 
                 <div className="col">
                     <div className="detail-line-item">
-                        <WindIcon width={25} height={25} fill={'#05d75a'} />
+                        <WindIcon width={22} height={22} fill={'#05d75a'} />
                         <div className="item-info">
                             <span className="title">Wind</span>
                             <span className="value d-flex align-items-center justify-content-center">
@@ -84,7 +84,7 @@ const DetailInfo = ({ dataApp }: IProps) => {
 
                 <div className="col">
                     <div className="detail-line-item">
-                        <PressureIcon width={25} height={25} fill={'#082541'} />
+                        <PressureIcon width={22} height={22} fill={'#082541'} />
                         <div className="item-info">
                             <span className="title">Pressure</span>
                             <span className="value">
@@ -96,13 +96,10 @@ const DetailInfo = ({ dataApp }: IProps) => {
 
                 <div className="col">
                     <div className="detail-line-item">
-                        <UVIcon width={25} height={25} fill={'#e6e604'} />
+                        <UVIcon width={22} height={22} fill={'#e6e604'} />
                         <div className="item-info">
                             <span className="title">UV Index</span>
-                            <span className="value">
-                                {curWeatherData.uvi} -{' '}
-                                {getUVLevel(curWeatherData.uvi)}
-                            </span>
+                            <span className="value">{curWeatherData.uvi}</span>
                         </div>
                     </div>
                 </div>

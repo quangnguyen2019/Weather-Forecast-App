@@ -188,6 +188,7 @@
 .current-weather .current-temperature > span:nth-child(2) {
   -webkit-transform: translateY(-7px);
           transform: translateY(-7px);
+  font-size: 32px;
 }
 
 .current-weather .temperature-number-smaller {
@@ -516,7 +517,7 @@
   position: absolute;
   inset: 0;
   background-color: currentColor;
-  opacity: 0.05;
+  opacity: 0.1;
 }
 
 .detail-info {
