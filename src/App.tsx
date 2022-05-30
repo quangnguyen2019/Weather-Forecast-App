@@ -9,6 +9,7 @@ import DayForecast from './components/DayForecast';
 import WeatherChart from './components/WeatherChart';
 import AirPollution from './components/AirPollution';
 import SearchBox from './components/SeachBox';
+import DetailInfo from './components/DetailInfo';
 import {
     PS_access_key,
     Openweathermap_key,
@@ -16,7 +17,6 @@ import {
     Units,
     replaceWhitespace,
 } from './global';
-import DetailInfo from './components/DetailInfo';
 
 function App() {
     const [data, setData] = useState<IData[]>([
@@ -54,12 +54,37 @@ function App() {
         },
     ]);
 
-    const handleChangeUnit = (newUnit: Units) => {
-        setData((prevData) => ({
-            ...prevData,
-            unit: newUnit,
-        }));
-        getWeatherData(data[0].address, newUnit);
+    const handleChangeUnit = async (newUnit: Units) => {
+        const createUrlForecast = (lat: number, lon: number, unit: Units) => {
+            return (
+                `https://api.openweathermap.org/data/2.5/onecall` +
+                `?lat=${lat}&lon=${lon}&exclude=minutely` +
+                `&units=${unit}&appid=${Openweathermap_key}`
+            );
+        };
+
+        const responses = await Promise.all(
+            data.map((obj) =>
+                fetch(
+                    createUrlForecast(
+                        obj.weatherData.lat,
+                        obj.weatherData.lon,
+                        newUnit
+                    )
+                )
+            )
+        );
+        const newDataByUnit = await Promise.all(
+            responses.map((res) => res.json())
+        );
+
+        setData(
+            newDataByUnit.map((obj, index) => ({
+                address: data[index].address,
+                unit: newUnit,
+                weatherData: obj,
+            }))
+        );
     };
 
     const getWeatherData = async (searchValue: string, unit: Units) => {
@@ -138,7 +163,7 @@ function App() {
         await fetch(urlForecastWeather)
             .then((res) => res.json())
             .then((res) => {
-                // Delete initial value
+                // Delete initial value ({ lat: 0, lon: 0, ... })
                 if (data.length === 1 && data[0].weatherData.lat === 0) {
                     setData([
                         {
@@ -152,7 +177,7 @@ function App() {
 
                 setData((prevData) => [
                     {
-                        unit: prevData[0].unit,
+                        unit: unit,
                         address: newAddress,
                         weatherData: res,
                     },

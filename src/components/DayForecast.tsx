@@ -32,7 +32,7 @@ const DayForecast = ({ dataApp }: IProps) => {
         }
     };
 
-    const scrollNext = (e: any) => {
+    const scrollNext = () => {
         const list = document.querySelector('.row-forecast-list');
         if (list) {
             list.scrollLeft += 200;
@@ -46,10 +46,8 @@ const DayForecast = ({ dataApp }: IProps) => {
 
         if (scrollLeft === 0) {
             setScrollToEnd({ ...scrollToEnd, left: true });
-            return;
         } else if (clientWidth + scrollLeft === scrollWidth) {
             setScrollToEnd({ ...scrollToEnd, right: true });
-            return;
         } else if (scrollToEnd.left === true || scrollToEnd.right === true) {
             setScrollToEnd({ left: false, right: false });
         }
