@@ -1,4 +1,4 @@
-import { IData, Units, getTimeString } from '../global';
+import { IData, Units, getTimeString, ColorLevels } from '../global';
 import { ReactComponent as SunIcon } from '../images/Icons/brightness-high.svg';
 import { ReactComponent as MoonIcon } from '../images/Icons/moon-stars.svg';
 import { ReactComponent as WindDirectionIcon } from '../images/Icons/arrow.svg';
@@ -12,15 +12,16 @@ interface IProps {
 }
 
 const getUVLevel = (uvi: number) => {
-    if (uvi < 3) return 'Low';
-    else if (uvi < 6) return 'Moderate';
-    else if (uvi < 8) return 'High';
-    else if (uvi < 11) return 'Very High';
-    else return 'Extreme';
+    if (uvi < 3) return { title: 'Low', color: ColorLevels.Green };
+    else if (uvi < 6) return { title: 'Moderate', color: ColorLevels.Yellow };
+    else if (uvi < 8) return { title: 'High', color: ColorLevels.Orange };
+    else if (uvi < 11) return { title: 'Very High', color: ColorLevels.Red };
+    else return { title: 'Extreme', color: ColorLevels.Purple };
 };
 
 const DetailInfo = ({ dataApp }: IProps) => {
     const curWeatherData = dataApp.weatherData.current;
+    const uviLevel = getUVLevel(curWeatherData.uvi);
 
     return (
         <div className="detail-info">
@@ -103,7 +104,14 @@ const DetailInfo = ({ dataApp }: IProps) => {
                         <UVIcon width={22} height={22} fill={'#e6e604'} />
                         <div className="item-info">
                             <span className="title">UV Index</span>
-                            <span className="value">{curWeatherData.uvi}</span>
+                            <span className="value uv-index-value">
+                                {curWeatherData.uvi}
+                                <span
+                                    className="color-level"
+                                    title={`Level : ${uviLevel.title}`}
+                                    style={{ backgroundColor: uviLevel.color }}
+                                ></span>
+                            </span>
                         </div>
                     </div>
                 </div>

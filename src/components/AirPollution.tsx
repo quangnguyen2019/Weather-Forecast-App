@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { IData, Openweathermap_key } from '../global';
+import { ColorLevels, IData, Openweathermap_key } from '../global';
 import { ReactComponent as WindIcon } from '../images/Icons/wind.svg';
 
 interface IProps {
@@ -61,31 +61,31 @@ const AirPollution = ({ dataApp }: IProps) => {
                 setAirQualityData({
                     components,
                     info: aqiLevels.good,
-                    color: '#05d75a',
+                    color: ColorLevels.Green,
                 });
             } else if (aqi === 2) {
                 setAirQualityData({
                     components,
                     info: aqiLevels.fair,
-                    color: '#fdd64b',
+                    color: ColorLevels.Yellow,
                 });
             } else if (aqi === 3) {
                 setAirQualityData({
                     components,
                     info: aqiLevels.moderate,
-                    color: 'orange',
+                    color: ColorLevels.Orange,
                 });
             } else if (aqi === 4) {
                 setAirQualityData({
                     components,
                     info: aqiLevels.poor,
-                    color: '#e10303',
+                    color: ColorLevels.Red,
                 });
             } else if (aqi === 5) {
                 setAirQualityData({
                     components,
                     info: aqiLevels.veryPoor,
-                    color: '#ad00ad',
+                    color: ColorLevels.Purple,
                 });
             }
         } catch {

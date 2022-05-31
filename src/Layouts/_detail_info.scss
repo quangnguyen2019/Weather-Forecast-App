@@ -25,4 +25,17 @@
         font-weight: 500;
         font-size: 17px;
     }
+
+    .uv-index-value {
+        display: flex;
+        align-items: center;
+    }
+
+    .color-level {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-left: 8px;
+    }
 }

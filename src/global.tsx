@@ -58,6 +58,14 @@ export enum Units {
     F = 'imperial',
 }
 
+export enum ColorLevels {
+    Green = '#05d75a',
+    Yellow = '#fdd64b',
+    Orange = 'orange',
+    Red = '#e10303',
+    Purple = '#ad00ad',
+}
+
 export const replaceWhitespace = (searchValue: string) => {
     // replace whitespace ( '\s' in regex ) with '%20'
     return searchValue.trim().replace(/\s/g, '%20');
