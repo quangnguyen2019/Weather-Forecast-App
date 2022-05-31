@@ -28,6 +28,8 @@ function App() {
                 lon: 0,
                 current: {
                     dt: 0,
+                    sunrise: 0,
+                    sunset: 0,
                     dew_point: 0,
                     uvi: 0,
                     feels_like: 0,
@@ -164,6 +166,7 @@ function App() {
             .then((res) => res.json())
             .then((res) => {
                 // Delete initial value ({ lat: 0, lon: 0, ... })
+                // Replace new value
                 if (data.length === 1 && data[0].weatherData.lat === 0) {
                     setData([
                         {

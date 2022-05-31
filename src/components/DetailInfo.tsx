@@ -1,4 +1,4 @@
-import { IData, Units } from '../global';
+import { IData, Units, getTimeString } from '../global';
 import { ReactComponent as SunIcon } from '../images/Icons/brightness-high.svg';
 import { ReactComponent as MoonIcon } from '../images/Icons/moon-stars.svg';
 import { ReactComponent as WindDirectionIcon } from '../images/Icons/arrow.svg';
@@ -30,7 +30,9 @@ const DetailInfo = ({ dataApp }: IProps) => {
                         <SunIcon width={22} height={22} fill={'#e6e604'} />
                         <div className="item-info">
                             <span className="title">Sunrise</span>
-                            <span className="value">04:25 AM</span>
+                            <span className="value">
+                                {getTimeString(curWeatherData.sunrise)}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -40,7 +42,9 @@ const DetailInfo = ({ dataApp }: IProps) => {
                         <MoonIcon width={22} height={22} fill={'#1a6bba'} />
                         <div className="item-info">
                             <span className="title">Sunset</span>
-                            <span className="value">04:25 PM</span>
+                            <span className="value">
+                                {getTimeString(curWeatherData.sunset)}
+                            </span>
                         </div>
                     </div>
                 </div>

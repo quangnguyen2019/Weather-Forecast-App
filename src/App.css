@@ -124,6 +124,8 @@
   background-color: #6f9fff;
   padding: 24px 20px;
   position: relative;
+  -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.02);
+          box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.02);
 }
 
 .current-weather .following-card {
@@ -131,6 +133,8 @@
   border-radius: 12px;
   padding: 12px 16px;
   cursor: pointer;
+  -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.02);
+          box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.02);
 }
 
 .current-weather .address {

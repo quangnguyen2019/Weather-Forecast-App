@@ -18,6 +18,7 @@ const Header = (props: IPropHeader) => {
         };
         setTimeString();
 
+        // update time string after 30s
         const intervalID = setInterval(() => {
             setTimeString();
         }, 30000);

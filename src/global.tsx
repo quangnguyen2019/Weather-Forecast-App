@@ -10,6 +10,8 @@ export interface IData {
         lon: number;
         current: {
             dt: number;
+            sunrise: number;
+            sunset: number;
             temp: number;
             uvi: number;
             feels_like: number;
