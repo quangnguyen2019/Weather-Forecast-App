@@ -41,7 +41,9 @@ function App() {
                     visibility: 0,
                     weather: [{ description: '', icon: '' }],
                 },
-                hourly: [{ dt: 0, temp: 0, pop: 0 }],
+                hourly: [
+                    { dt: 0, temp: 0, pop: 0, weather: [{ description: '' }] },
+                ],
                 daily: [
                     {
                         dt: 0,

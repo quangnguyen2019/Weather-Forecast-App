@@ -33,6 +33,11 @@ export interface IData {
                 dt: number;
                 temp: number;
                 pop: number;
+                weather: [
+                    {
+                        description: string;
+                    }
+                ];
             }
         ];
         daily: [
