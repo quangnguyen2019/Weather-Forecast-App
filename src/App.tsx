@@ -59,38 +59,10 @@ function App() {
     ]);
 
     const handleChangeUnit = async (newUnit: Units) => {
-        const createUrlForecast = (lat: number, lon: number, unit: Units) => {
-            return (
-                `https://api.openweathermap.org/data/2.5/onecall` +
-                `?lat=${lat}&lon=${lon}&exclude=minutely` +
-                `&units=${unit}&appid=${Openweathermap_key}`
-            );
-        };
-
-        const responses = await Promise.all(
-            data.map((obj) =>
-                fetch(
-                    createUrlForecast(
-                        obj.weatherData.lat,
-                        obj.weatherData.lon,
-                        newUnit
-                    )
-                )
-            )
-        );
-        const newDataByUnit = await Promise.all(
-            responses.map((res) => res.json())
-        );
-
-        setData(
-            newDataByUnit.map((obj, index) => ({
-                address: data[index].address,
-                unit: newUnit,
-                weatherData: obj,
-            }))
-        );
+        getDataMultipleAddress(data, newUnit);
     };
 
+    // Get data for only 1 address
     const getWeatherData = async (searchValue: string, unit: Units) => {
         let lat = 0;
         let lon = 0;
@@ -153,6 +125,7 @@ function App() {
         return isExisted;
     };
 
+    // Get data for only 1 address
     const getWeatherDataFromCoord = async (
         lat: number,
         lon: number,
@@ -188,12 +161,63 @@ function App() {
                     },
                     ...prevData,
                 ]);
+
+                // Set Local Storage
+                localStorage.dataWeather = JSON.stringify([
+                    {
+                        unit: unit,
+                        address: newAddress,
+                        weatherData: res,
+                    },
+                    ...data,
+                ]);
             })
             .catch((err) => console.error(err));
     };
 
+    // Get data for multiple addresses
+    const getDataMultipleAddress = async (dataArr: IData[], inputUnit: Units) => {
+        const createUrlForecast = (lat: number, lon: number, unit: Units) => {
+            return (
+                `https://api.openweathermap.org/data/2.5/onecall` +
+                `?lat=${lat}&lon=${lon}&exclude=minutely` +
+                `&units=${unit}&appid=${Openweathermap_key}`
+            );
+        };
+
+        const responses = await Promise.all(
+            dataArr.map((obj) =>
+                fetch(
+                    createUrlForecast(
+                        obj.weatherData.lat,
+                        obj.weatherData.lon,
+                        inputUnit
+                    )
+                )
+            )
+        );
+
+        const newDataByUnit = await Promise.all(
+            responses.map((res) => res.json())
+        );
+
+        const newDataApp = newDataByUnit.map((obj, index) => ({
+            address: dataArr[index].address,
+            unit: inputUnit,
+            weatherData: obj,
+        }));
+
+        setData(newDataApp);
+
+        // Set Local Storage
+        localStorage.dataWeather = JSON.stringify(newDataApp);
+    };
+
     useEffect(() => {
-        getWeatherData(replaceWhitespace(data[0].address), data[0].unit);
+        const dataLocal: IData[] = JSON.parse(localStorage.dataWeather);
+        dataLocal
+            ? getDataMultipleAddress(dataLocal, dataLocal[0].unit)
+            : getWeatherData(replaceWhitespace(data[0].address), data[0].unit);
     }, []);
 
     return (

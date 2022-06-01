@@ -8,7 +8,9 @@ interface IProps {
 }
 
 const UnitSwitch = ({ dataApp, handleChangeUnit }: IProps) => {
-    const [is_C_Deg_Active, setIs_C_Deg_Active] = useState(true);
+    const [is_C_Deg_Active, setIs_C_Deg_Active] = useState(
+        dataApp.unit === Units.C ? true : false
+    );
 
     const changeUnit = (e: any) => {
         const unit = e.target.getAttribute('data-unit');

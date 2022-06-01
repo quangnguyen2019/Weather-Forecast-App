@@ -37,6 +37,9 @@ const CurrentWeather = ({ dataApp, setDataApp }: IProps) => {
         const locationRepositioned = tempData.splice(index, 1)[0];
         tempData.splice(0, 0, locationRepositioned);
         setDataApp(tempData);
+
+        // Set Local Storage
+        localStorage.dataWeather = JSON.stringify(tempData);
     };
 
     const onClickDropdownBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -62,6 +65,9 @@ const CurrentWeather = ({ dataApp, setDataApp }: IProps) => {
 
         setDataApp(tempData);
         setDropdowns(tempDropdowns);
+
+        // Set Local Storage
+        localStorage.dataWeather = JSON.stringify(tempData);
     };
 
     const handleClickOutside = ({ target }: MouseEvent) => {
