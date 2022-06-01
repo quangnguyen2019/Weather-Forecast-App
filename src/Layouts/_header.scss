@@ -1,75 +1,15 @@
-$border-color: #b1b1b1;
-$padding-x: 15px;
-$padding-y: 3px;
-
 .header {
     position: relative;
-    margin-bottom: 35px;
 
-    .search-box {
-        background: transparent;
-        border: 1px solid $border-color;
-        border-right: transparent;
-        border-radius: $border-radius 0 0 $border-radius;
-        outline: none;
-        padding: $padding-y $padding-x;
-        width: 25%;
-    }
-
-    .small-note {
-        position: absolute;
-        top: 36px;
-        font-size: 11px;
-        color: #b2b2b2;
-    }
-
-    .btn-detect-location {
-        border: none;
-        border-top: 1px solid $border-color;
-        border-bottom: 1px solid $border-color;
-        box-shadow: none;
-        padding: 3px 3px 5px;
-        background-color: transparent;
-    }
-
-    .btn-search {
-        border: 1px solid $border-color;
-        border-left: transparent;
-        padding: $padding-y $padding-x 5px;
-        border-radius: 0 $border-radius $border-radius 0;
-        background-color: transparent;
-        outline: none;
-    }
-
-    .unit-switch {
-        position: absolute;
-        width: fit-content;
-        right: 0;
-        background-color: $gray-light;
-        padding: 0 8px;
-        border-radius: 20px;
-
-        .btn-unit {
-            border-radius: 50%;
-            border: transparent;
-            padding: 5px 10px;
-            background-color: transparent;
-            transition: all 0.2s;
-            outline: none;
-
-            &:hover {
-                background: rgba(170, 170, 170, 0.171);
-            }
-            &:active {
-                background-color: rgba(170, 170, 170, 0.24);
-            }
+    .current-time-container {
+        .current-time {
+            letter-spacing: 0.2rem;
+            color: $blue;
         }
 
-        .active {
-            background-color: rgba(170, 170, 170, 0.24);
-            &:hover {
-                background-color: rgba(170, 170, 170, 0.24);
-            }
+        .current-date {
+            font-weight: 500;
+            letter-spacing: 0.05rem;
         }
     }
 }

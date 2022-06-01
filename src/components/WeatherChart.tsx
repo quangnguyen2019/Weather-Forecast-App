@@ -1,42 +1,57 @@
 import { Chart, registerables } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 import { IData } from '../global';
-import { useState } from 'react';
 
 interface IInitialValue {
     times: string[];
     temps: number[];
     pop: number[]; //  Probability of precipitation
+    weatherCondition: string[][];
 }
 
-Chart.register(...registerables, ChartDataLabels);
+Chart.register(...registerables);
 
 const WeatherChart = ({ dataApp }: { dataApp: IData }) => {
-    const [isDataset2Hidden, setIsDataset2Hidden] = useState(true);
     const hourlyData = dataApp.weatherData.hourly;
-    const timesTempsPops = hourlyData.reduce(
+    const chartData = hourlyData.reduce(
         (total, data, index) => {
             // Show labels on chart as 19 PM -> 21 PM -> 23 PM...
-            if (index % 2 === 0) {
-                const hour = new Date(data.dt * 1000).getHours();
-                return {
-                    times: [...total.times, hour + (hour <= 12 ? ' AM' : ' PM')],
-                    temps: [...total.temps, data.temp],
-                    pop: [...total.pop, data.pop * 100],
-                };
-            }
-            return total;
+            const hour = new Date(data.dt * 1000).getHours();
+            return {
+                times: [...total.times, hour + (hour <= 12 ? ' AM' : ' PM')],
+                temps: [...total.temps, data.temp],
+                pop: [...total.pop, data.pop * 100],
+                weatherCondition: [
+                    ...total.weatherCondition,
+                    data.weather[0].description.split(' '),
+                ],
+            };
         },
-        { times: [], temps: [], pop: [] } as IInitialValue
+        { times: [], temps: [], pop: [], weatherCondition: [] } as IInitialValue
     );
 
-    const numLabelsDisplayed = 12;
-    const timeLabels = timesTempsPops.times.slice(0, numLabelsDisplayed);
+    const numLabelsDisplayed = 8;
+    const timeLabels = chartData.times.slice(0, numLabelsDisplayed);
     timeLabels[0] = 'Now';
-    const tempDataNested = timesTempsPops.temps.slice(0, numLabelsDisplayed);
-    const popDataNested = timesTempsPops.pop.slice(0, numLabelsDisplayed);
+    const tempDataNested = chartData.temps.slice(0, numLabelsDisplayed);
+    const popDataNested = chartData.pop.slice(0, numLabelsDisplayed);
+    const conditionLabels = chartData.weatherCondition.slice(
+        0,
+        numLabelsDisplayed
+    );
+
+    const legendMarginBottom = {
+        id: 'legendMarginBottom',
+        beforeInit(chart: any) {
+            const fitValue = chart.legend.fit;
+
+            chart.legend.fit = function fit() {
+                fitValue.bind(chart.legend)();
+                return (this.height += 5);
+            };
+        },
+    };
 
     return (
         <div className="chart-container">
@@ -52,14 +67,7 @@ const WeatherChart = ({ dataApp }: { dataApp: IData }) => {
                             borderColor: '#dc3545',
                             backgroundColor: 'rgba(255,0,0,0.5)',
                             tension: 0.4,
-                            fill: true,
-                            datalabels: {
-                                align: 'end',
-                                anchor: 'end',
-                                backgroundColor: '#dc3545',
-                                formatter: (value) => Math.round(value) + '°',
-                            },
-                            hidden: !isDataset2Hidden,
+                            fill: false,
                         },
                         {
                             label: 'Precipitation ( % )',
@@ -67,52 +75,44 @@ const WeatherChart = ({ dataApp }: { dataApp: IData }) => {
                             borderColor: '#36a2eb',
                             backgroundColor: '#36a2eb80',
                             tension: 0.4,
-                            fill: true,
-                            datalabels: {
-                                align: 'right',
-                                anchor: 'center',
-                                backgroundColor: '#36a2eb',
-                                formatter: (value) => Math.round(value) + '%',
-                            },
-                            hidden: isDataset2Hidden,
+                            fill: false,
                         },
                     ],
                 }}
                 options={{
                     scales: {
                         x: {
-                            grid: { display: false },
+                            grid: { display: false, drawBorder: false },
+                            position: 'top',
+                            ticks: {
+                                font: { size: 11 },
+                            },
                         },
                         x1: {
+                            grid: { display: false, drawBorder: false },
                             position: 'bottom',
-                            grid: { display: false },
+                            labels: conditionLabels,
+                            ticks: {
+                                font: { size: 10 },
+                            },
                         },
                         y: {
-                            position: 'left',
+                            grid: { drawBorder: false },
                         },
                     },
                     layout: {
-                        padding: {
-                            top: 50,
-                        },
+                        // padding: { top: 4 },
                     },
                     plugins: {
                         legend: {
-                            onClick: () => {
-                                setIsDataset2Hidden(!isDataset2Hidden);
+                            labels: {
+                                boxWidth: 15,
+                                boxHeight: 10,
                             },
-                        },
-                        datalabels: {
-                            borderRadius: 4,
-                            color: 'white',
-                            font: {
-                                weight: 'bold',
-                            },
-                            padding: 6,
                         },
                     },
                 }}
-                plugins={[ChartDataLabels]}
+                plugins={[legendMarginBottom]}
             />
         </div>
     );

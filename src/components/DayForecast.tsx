@@ -1,11 +1,12 @@
+import { UIEvent, useState } from 'react';
 import { IData } from '../global';
-import WeatherChart from './WeatherChart';
 
 interface IProps {
     dataApp: IData;
 }
 
 const DayForecast = ({ dataApp }: IProps) => {
+    const [scrollToEnd, setScrollToEnd] = useState({ left: true, right: false });
     const dailyWeatherData = dataApp.weatherData.daily;
 
     const getDate = (unixTime: number) => {
@@ -27,22 +28,35 @@ const DayForecast = ({ dataApp }: IProps) => {
     const scrollPrev = () => {
         const list = document.querySelector('.row-forecast-list');
         if (list) {
-            list.scrollLeft -= 400;
+            list.scrollLeft -= 200;
         }
     };
 
-    const scrollNext = (e: any) => {
+    const scrollNext = () => {
         const list = document.querySelector('.row-forecast-list');
         if (list) {
-            list.scrollLeft += 400;
+            list.scrollLeft += 200;
+        }
+    };
+
+    const onScroll = ({ target }: UIEvent) => {
+        const scrollLeft = (target as HTMLDivElement).scrollLeft;
+        const clientWidth = (target as HTMLDivElement).clientWidth;
+        const scrollWidth = (target as HTMLDivElement).scrollWidth;
+
+        if (scrollLeft === 0) {
+            setScrollToEnd({ ...scrollToEnd, left: true });
+        } else if (clientWidth + scrollLeft === scrollWidth) {
+            setScrollToEnd({ ...scrollToEnd, right: true });
+        } else if (scrollToEnd.left === true || scrollToEnd.right === true) {
+            setScrollToEnd({ left: false, right: false });
         }
     };
 
     return (
-        <section className="day-forecast mt-5">
-            <p className="caption"> 8 day forecast </p>
+        <section className="day-forecast mt-4">
             <div className="day-forecast-list">
-                <div className="row gx-2 row-forecast-list">
+                <div className="row gx-2 row-forecast-list" onScroll={onScroll}>
                     {dailyWeatherData.map((data, index) => (
                         <div className="col-4 col-sm-3 col-md-2" key={index}>
                             <div className="day-forecast-item">
@@ -66,15 +80,19 @@ const DayForecast = ({ dataApp }: IProps) => {
                             </div>
                         </div>
                     ))}
-                    <button className="btn-prev" onClick={scrollPrev}>
-                        &lt;
-                    </button>
-                    <button className="btn-next" onClick={scrollNext}>
-                        &gt;
-                    </button>
+
+                    {!scrollToEnd.left && (
+                        <button className="btn-prev" onClick={scrollPrev}>
+                            &lt;
+                        </button>
+                    )}
+                    {!scrollToEnd.right && (
+                        <button className="btn-next" onClick={scrollNext}>
+                            &gt;
+                        </button>
+                    )}
                 </div>
             </div>
-            <WeatherChart dataApp={dataApp} />
         </section>
     );
 };

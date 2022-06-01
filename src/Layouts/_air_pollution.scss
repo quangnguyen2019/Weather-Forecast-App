@@ -1,18 +1,18 @@
-.air-pollution-info {
+.air-pollution {
     display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    border-radius: 12px;
-    max-width: 70%;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 20px;
+    background-color: white;
+    border-radius: $border-radius;
     position: relative;
+    box-shadow: $box-shadow;
+    height: 100%;
 
-    &::before {
-        content: '';
-        border-radius: inherit;
-        position: absolute;
-        inset: 0;
-        background-color: currentColor;
-        opacity: 0.2;
+    &-caption {
+        font-size: 1.15rem;
+        margin-bottom: 18px;
+        color: #363e64;
     }
 
     .index {
@@ -22,7 +22,7 @@
         margin-right: 25px;
     }
 
-    .info {
+    .evaluation-info {
         display: flex;
         flex-direction: column;
 
@@ -33,7 +33,41 @@
             margin-bottom: 8px;
         }
         & > span:nth-child(2) {
-            color: #b4b0b0;
+            color: $light-blue;
+        }
+    }
+
+    .components {
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 20px;
+    }
+
+    .component-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        border-radius: $border-radius;
+        padding: 6px 4px;
+
+        & > span:first-child {
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        & > span:nth-child(2) {
+            text-transform: uppercase;
+            font-size: 13px;
+        }
+
+        &::before {
+            content: '';
+            border-radius: inherit;
+            position: absolute;
+            inset: 0;
+            background-color: currentColor;
+            opacity: 0.1;
         }
     }
 }

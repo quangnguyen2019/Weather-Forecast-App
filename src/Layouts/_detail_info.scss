@@ -1,0 +1,41 @@
+.detail-info {
+    background-color: #fff;
+    border-radius: $border-radius;
+    padding: 20px;
+    box-shadow: $box-shadow;
+
+    .detail-line-item {
+        display: flex;
+        align-items: center;
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            margin-left: 16px;
+        }
+    }
+
+    .title {
+        color: #bdc3db;
+        font-size: 14px;
+    }
+
+    .value {
+        color: $blue;
+        font-weight: 500;
+        font-size: 17px;
+    }
+
+    .uv-index-value {
+        display: flex;
+        align-items: center;
+    }
+
+    .color-level {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-left: 8px;
+    }
+}
