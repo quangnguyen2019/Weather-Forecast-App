@@ -1,4 +1,5 @@
 import { Chart, registerables } from 'chart.js';
+import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
 import { IData } from '../global';
@@ -53,6 +54,25 @@ const WeatherChart = ({ dataApp }: { dataApp: IData }) => {
         },
     };
 
+    const myFunc = () => {
+        if (window.innerWidth >= 1455) {
+            Chart.defaults.font.size = 12;
+        } else if (window.innerWidth >= 1365) {
+            Chart.defaults.font.size = 11;
+        } else if (window.innerWidth >= 1275) {
+            Chart.defaults.font.size = 10;
+        } else {
+            Chart.defaults.font.size = 9;
+        }
+        console.log(window.innerWidth);
+        console.log(Chart.defaults.font.size);
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', myFunc);
+        return () => window.removeEventListener('resize', myFunc);
+    }, []);
+
     return (
         <div className="chart-container">
             <Line
@@ -84,17 +104,11 @@ const WeatherChart = ({ dataApp }: { dataApp: IData }) => {
                         x: {
                             grid: { display: false, drawBorder: false },
                             position: 'top',
-                            ticks: {
-                                font: { size: 11 },
-                            },
                         },
                         x1: {
                             grid: { display: false, drawBorder: false },
                             position: 'bottom',
                             labels: conditionLabels,
-                            ticks: {
-                                font: { size: 10 },
-                            },
                         },
                         y: {
                             grid: { drawBorder: false },
