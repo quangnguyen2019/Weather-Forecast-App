@@ -40,13 +40,13 @@ const DayForecast = ({ dataApp }: IProps) => {
     };
 
     const onScroll = ({ target }: UIEvent) => {
-        const scrollLeft = (target as HTMLDivElement).scrollLeft;
+        const scrollLeft = Math.round((target as HTMLDivElement).scrollLeft);
         const clientWidth = (target as HTMLDivElement).clientWidth;
         const scrollWidth = (target as HTMLDivElement).scrollWidth;
 
         if (scrollLeft === 0) {
             setScrollToEnd({ ...scrollToEnd, left: true });
-        } else if (clientWidth + scrollLeft === scrollWidth) {
+        } else if (clientWidth + scrollLeft >= scrollWidth) {
             setScrollToEnd({ ...scrollToEnd, right: true });
         } else if (scrollToEnd.left === true || scrollToEnd.right === true) {
             setScrollToEnd({ left: false, right: false });
