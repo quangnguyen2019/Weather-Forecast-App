@@ -220,6 +220,7 @@ function App() {
             ? getDataMultipleAddress(dataLocal, dataLocal[0].unit)
             : getWeatherData(replaceWhitespace(data[0].address), data[0].unit);
 
+        // Show currentWeather component on left side if screen size is less than 1200px
         window.addEventListener('resize', () => {
             if (window.matchMedia('(max-width: 1199px)').matches) {
                 setIsCurWeatherShowingLeft(true);

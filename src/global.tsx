@@ -78,7 +78,7 @@ export const replaceWhitespace = (searchValue: string) => {
 
 // Input: timestamp (unix)
 // Output: 09:10 AM (PM),
-export const getTimeString = (dateTime?: number) => {
+export const getTimeString = (dateTime?: number, isGetMinutes = true) => {
     let d = dateTime ? new Date(dateTime * 1000) : new Date();
     let amOrPm = d.getHours() > 12 ? 'PM' : 'AM';
     let minutes = d.getMinutes() >= 10 ? d.getMinutes() : '0' + d.getMinutes();
@@ -87,16 +87,18 @@ export const getTimeString = (dateTime?: number) => {
 
     if (initialHours < 10) {
         // (< 10h): 0h -> 9h
-        hours = '0' + initialHours;
+        hours = isGetMinutes ? '0' + initialHours : '' + initialHours;
     } else if (initialHours < 13) {
         // (10h <= x < 13h): 10h -> 12h
         hours = '' + initialHours;
     } else if (initialHours < 22) {
         // (13h <= x < 22h)
-        hours = '0' + (initialHours - 12);
+        hours = isGetMinutes
+            ? '0' + (initialHours - 12)
+            : '' + (initialHours - 12);
     } else {
         hours = '' + (initialHours - 12);
     }
 
-    return `${hours}:${minutes} ${amOrPm}`;
+    return isGetMinutes ? `${hours}:${minutes} ${amOrPm}` : `${hours} ${amOrPm}`;
 };

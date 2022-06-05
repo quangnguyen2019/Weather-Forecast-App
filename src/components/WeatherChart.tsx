@@ -2,7 +2,7 @@ import { Chart, registerables } from 'chart.js';
 import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
-import { IData } from '../global';
+import { getTimeString, IData } from '../global';
 
 interface IInitialValue {
     times: string[];
@@ -16,11 +16,9 @@ Chart.register(...registerables);
 const WeatherChart = ({ dataApp }: { dataApp: IData }) => {
     const hourlyData = dataApp.weatherData.hourly;
     const chartData = hourlyData.reduce(
-        (total, data, index) => {
-            // Show labels on chart as 19 PM -> 21 PM -> 23 PM...
-            const hour = new Date(data.dt * 1000).getHours();
+        (total, data) => {
             return {
-                times: [...total.times, hour + (hour <= 12 ? ' AM' : ' PM')],
+                times: [...total.times, getTimeString(data.dt, false)],
                 temps: [...total.temps, data.temp],
                 pop: [...total.pop, data.pop * 100],
                 weatherCondition: [
@@ -64,8 +62,8 @@ const WeatherChart = ({ dataApp }: { dataApp: IData }) => {
         } else {
             Chart.defaults.font.size = 9;
         }
-        console.log(window.innerWidth);
-        console.log(Chart.defaults.font.size);
+        // console.log(window.innerWidth);
+        // console.log(Chart.defaults.font.size);
     };
 
     useEffect(() => {
