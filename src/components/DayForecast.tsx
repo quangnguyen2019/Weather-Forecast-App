@@ -54,7 +54,7 @@ const DayForecast = ({ dataApp }: IProps) => {
     };
 
     return (
-        <section className="day-forecast mt-4">
+        <section className="day-forecast">
             <div className="day-forecast-list">
                 <div className="row gx-2 row-forecast-list" onScroll={onScroll}>
                     {dailyWeatherData.map((data, index) => (

@@ -24,7 +24,7 @@ const MainAddressCard = (props: IProps) => {
     return (
         <div className="main-address-card">
             <div className="row gx-0">
-                <p className="address mb-3">
+                <p className="address mb-4 mb-xl-3">
                     <MapPositionIcon
                         width={20}
                         height={20}
@@ -52,19 +52,22 @@ const MainAddressCard = (props: IProps) => {
                         )}
                     </button>
                 </p>
-                <div className="col-12 current-image">
+
+                <div className="col-2 col-xl-12 current-image">
                     <img
                         src={`http://openweathermap.org/img/wn/${curWeatherData.weather[0].icon}@2x.png`}
                         alt=""
                     />
                 </div>
-                <div className="col-12 current-temperature">
+
+                <div className="col-3 col-xl-12 current-temperature">
                     <span className="temperature-number">
                         {Math.round(curWeatherData.temp)}
                     </span>
                     <span>&deg;{dataApp[0].unit === Units.C ? 'C' : 'F'}</span>
                 </div>
-                <div className="col-12 current-description">
+
+                <div className="col col-xl-12 current-description">
                     <p>{curWeatherData.weather[0].description}</p>
                     <p>
                         {currentHour < 17
@@ -75,7 +78,7 @@ const MainAddressCard = (props: IProps) => {
                 </div>
             </div>
 
-            <div className="mt-4">
+            <div className="mt-4 d-none d-xl-block">
                 <div className="row detail-item gx-5">
                     <div className="col">
                         <TemperatureIcon width={18} height={18} fill={'#fff'} />

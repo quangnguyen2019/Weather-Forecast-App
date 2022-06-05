@@ -118,7 +118,7 @@
   color: white;
 }
 
-.current-weather .first-card {
+.current-weather .main-address-card {
   text-align: center;
   border-radius: 12px;
   background-color: #6f9fff;
@@ -128,7 +128,7 @@
           box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.02);
 }
 
-.current-weather .following-card {
+.current-weather .extra-address-card {
   background-color: #524e46;
   border-radius: 12px;
   padding: 12px 16px;
@@ -301,7 +301,7 @@
 }
 
 .current-weather .button-disable svg {
-  fill: transparent;
+  fill: transparent !important;
 }
 
 .current-weather .button-disable:active svg {
@@ -311,6 +311,99 @@
 @media screen and (max-width: 1319px) {
   .current-weather .detail-item {
     font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  .current-weather .main-address-card {
+    background-color: #fff;
+    color: #363e64;
+    padding: 20px;
+    height: 100%;
+  }
+  .current-weather .main-address-card svg {
+    fill: #363e64;
+  }
+  .current-weather .main-address-card .address {
+    font-size: 19px;
+  }
+  .current-weather .main-address-card .current-image > img {
+    width: 100%;
+    -webkit-transform: scale(1.4) translateY(2px);
+            transform: scale(1.4) translateY(2px);
+  }
+  .current-weather .main-address-card .current-temperature > span:nth-child(2) {
+    -webkit-transform: translateY(-5px);
+            transform: translateY(-5px);
+  }
+  .current-weather .main-address-card .temperature-number {
+    font-size: 48px;
+    margin-left: 20px;
+  }
+  .current-weather .main-address-card .current-description {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    margin-left: 25px;
+  }
+  .current-weather .main-address-card .current-description > p:first-child {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+  .current-weather .main-address-card .current-description > p:nth-child(2) {
+    font-size: 16px;
+    color: #bdc2db;
+  }
+  .current-weather .extra-address-card-list {
+    height: 100%;
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  .current-weather .extra-address-card-list .btn-prev,
+  .current-weather .extra-address-card-list .btn-next {
+    color: #fff;
+    border-color: transparent !important;
+  }
+  .current-weather .extra-address-card-list .btn-prev--second {
+    left: 8px !important;
+  }
+  .current-weather .extra-address-card-list .btn-next--second {
+    right: 8px !important;
+  }
+  .current-weather .extra-address-card {
+    height: 100%;
+    padding: 20px 10px;
+    background-color: #524e46c4;
+  }
+  .current-weather .extra-address-card .address--smaller {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    font-size: 15px;
+  }
+  .current-weather .extra-address-card .address--smaller > span {
+    max-width: none;
+  }
+  .current-weather .extra-address-card .extra-card-image {
+    width: 55%;
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  .current-weather .extra-address-card .temperature-number-smaller {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .current-weather .extra-address-card .extra-card-image {
+    width: 44%;
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
   }
 }
 
@@ -367,40 +460,6 @@
 
 .day-forecast .day-temperature > span:first-child {
   font-weight: 500;
-}
-
-.day-forecast .btn-prev,
-.day-forecast .btn-next {
-  position: absolute;
-  display: inline-block;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  border: 1px solid #ddd;
-  background-color: transparent;
-  border-radius: 50%;
-  padding: 0 8px 2px;
-  font-weight: 500;
-  font-size: 18px;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
-}
-
-.day-forecast .btn-prev:hover,
-.day-forecast .btn-next:hover {
-  background: #e6e6e6;
-  border: transparent;
-}
-
-.day-forecast .btn-prev {
-  left: -12px;
-}
-
-.day-forecast .btn-next {
-  right: -12px;
 }
 
 .chart-container {
@@ -633,6 +692,39 @@ img {
   overflow-y: scroll;
   height: 100vh;
   position: relative;
+}
+
+.App .app-container .btn-prev,
+.App .app-container .btn-next {
+  position: absolute;
+  display: inline-block;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  top: 52%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  border-radius: 50%;
+  padding: 0 8px 2px;
+  font-weight: 500;
+  font-size: 18px;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  background: #e6e6e633;
+  border: 1px solid #e6e6e6;
+}
+
+.App .app-container .btn-prev:hover,
+.App .app-container .btn-next:hover {
+  background: #e6e6e6b6;
+}
+
+.App .app-container .btn-prev {
+  left: 0;
+}
+
+.App .app-container .btn-next {
+  right: 0;
 }
 
 .App ::-webkit-scrollbar {

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { IData } from '../global';
 import MainAddressCard from './MainAddressCard';
 import ExtraAddressCard from './ExtraAddressCard';
-import { isElement } from 'react-dom/test-utils';
 
 interface IProps {
     dataApp: IData[];
@@ -59,10 +58,11 @@ const CurrentWeather = ({ dataApp, setDataApp }: IProps) => {
     };
 
     const handleClickOutside = ({ target }: MouseEvent) => {
-        const arrButtonDropdowns = Array.from(
+        let arrButtonDropdowns = Array.from(
             document.querySelectorAll('.button-options')
         );
 
+        // get expanding dropdown
         let indexDropdown = -1;
         dropdowns.every((obj, index) => {
             if (obj.isOpen) {
@@ -99,21 +99,25 @@ const CurrentWeather = ({ dataApp, setDataApp }: IProps) => {
     }, [dataApp]);
 
     return (
-        <section className="current-weather">
-            <MainAddressCard
-                dataApp={dataApp}
-                dropdowns={dropdowns}
-                onClickDropdownBtn={onClickDropdownBtn}
-                onClickRemoveCard={onClickRemoveCard}
-            />
+        <section className="current-weather row gx-3">
+            <div className="col-7 col-lg-6 col-xl-12">
+                <MainAddressCard
+                    dataApp={dataApp}
+                    dropdowns={dropdowns}
+                    onClickDropdownBtn={onClickDropdownBtn}
+                    onClickRemoveCard={onClickRemoveCard}
+                />
+            </div>
 
-            <ExtraAddressCard
-                dataApp={dataApp}
-                dropdowns={dropdowns}
-                onClickDropdownBtn={onClickDropdownBtn}
-                onClickRemoveCard={onClickRemoveCard}
-                onClickCard={onClickCard}
-            />
+            <div className="col-5 col-lg-6 col-xl-12 position-relative">
+                <ExtraAddressCard
+                    dataApp={dataApp}
+                    dropdowns={dropdowns}
+                    onClickDropdownBtn={onClickDropdownBtn}
+                    onClickRemoveCard={onClickRemoveCard}
+                    onClickCard={onClickCard}
+                />
+            </div>
         </section>
     );
 };

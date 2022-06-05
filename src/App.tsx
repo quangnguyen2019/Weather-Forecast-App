@@ -57,6 +57,7 @@ function App() {
             },
         },
     ]);
+    const [isCurWeatherShowingLeft, setIsCurWeatherShowingLeft] = useState(false);
 
     const handleChangeUnit = async (newUnit: Units) => {
         getDataMultipleAddress(data, newUnit);
@@ -218,6 +219,14 @@ function App() {
         dataLocal
             ? getDataMultipleAddress(dataLocal, dataLocal[0].unit)
             : getWeatherData(replaceWhitespace(data[0].address), data[0].unit);
+
+        window.addEventListener('resize', () => {
+            if (window.matchMedia('(max-width: 1199px)').matches) {
+                setIsCurWeatherShowingLeft(true);
+            } else {
+                setIsCurWeatherShowingLeft(false);
+            }
+        });
     }, []);
 
     return (
@@ -230,16 +239,28 @@ function App() {
                 <div className="App">
                     <div className="container-fluid app-container">
                         <div className="row h-100">
-                            <div className="col-9 left-part py-4 px-5">
+                            <div className="col-12 col-xl-9 left-part py-4 px-5">
                                 <Header
                                     dataApp={data[0]}
                                     handleChangeUnit={handleChangeUnit}
                                 />
-                                <DayForecast dataApp={data[0]} />
 
-                                <div className="row mt-1 mb-3">
+                                {isCurWeatherShowingLeft && (
+                                    <div className="row d-xl-none mb-3">
+                                        <div className="col">
+                                            <CurrentWeather
+                                                dataApp={data}
+                                                setDataApp={setData}
+                                            />
+                                        </div>
+                                    </div>
+                                )}
+
+                                <DetailInfo dataApp={data[0]} />
+
+                                <div className="row my-1">
                                     <div className="col">
-                                        <DetailInfo dataApp={data[0]} />
+                                        <DayForecast dataApp={data[0]} />
                                     </div>
                                 </div>
 
@@ -253,7 +274,7 @@ function App() {
                                 </div>
                             </div>
 
-                            <div className="col-3 right-part py-4 px-4">
+                            <div className="col-0 col-xl-3 right-part py-4 px-4">
                                 <SearchBox
                                     dataApp={data[0]}
                                     getWeatherData={getWeatherData}
@@ -262,10 +283,13 @@ function App() {
                                     }
                                     checkAddressExists={checkAddressExists}
                                 />
-                                <CurrentWeather
-                                    dataApp={data}
-                                    setDataApp={setData}
-                                />
+
+                                {!isCurWeatherShowingLeft && (
+                                    <CurrentWeather
+                                        dataApp={data}
+                                        setDataApp={setData}
+                                    />
+                                )}
                             </div>
                         </div>
                     </div>

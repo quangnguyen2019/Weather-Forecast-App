@@ -39,35 +39,6 @@
         }
     }
 
-    .btn-prev,
-    .btn-next {
-        position: absolute;
-        display: inline-block;
-        width: fit-content;
-        top: 50%;
-        transform: translateY(-50%);
-        border: 1px solid #ddd;
-        background-color: transparent;
-        border-radius: 50%;
-        padding: 0 8px 2px;
-        font-weight: 500;
-        font-size: 18px;
-        transition: all 0.2s;
-
-        &:hover {
-            background: #e6e6e6;
-            border: transparent;
-        }
-    }
-
-    .btn-prev {
-        left: -12px;
-    }
-
-    .btn-next {
-        right: -12px;
-    }
-
     @media screen and (max-width: 991px) {
     }
 }
