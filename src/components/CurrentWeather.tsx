@@ -99,8 +99,8 @@ const CurrentWeather = ({ dataApp, setDataApp }: IProps) => {
     }, [dataApp]);
 
     return (
-        <section className="current-weather row gx-3">
-            <div className="col-7 col-lg-6 col-xl-12">
+        <section className="current-weather row gx-3 gy-2 mt-3">
+            <div className="col-12 col-md-7 col-lg-6 col-xl-12 mt-3 mt-md-0">
                 <MainAddressCard
                     dataApp={dataApp}
                     dropdowns={dropdowns}
@@ -109,7 +109,7 @@ const CurrentWeather = ({ dataApp, setDataApp }: IProps) => {
                 />
             </div>
 
-            <div className="col-5 col-lg-6 col-xl-12 position-relative">
+            <div className="col-12 col-md-5 col-lg-6 col-xl-12 mt-0 mt-xl-2 position-relative">
                 <ExtraAddressCard
                     dataApp={dataApp}
                     dropdowns={dropdowns}

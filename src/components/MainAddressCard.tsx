@@ -31,7 +31,7 @@ const MainAddressCard = (props: IProps) => {
                         fill={'#fff'}
                         style={{ marginRight: 8 }}
                     />
-                    {dataApp[0].address}
+                    <span>{dataApp[0].address}</span>
                     <button
                         className={classNames('button-options', {
                             'button-disable': dataApp.length === 1,
@@ -60,7 +60,7 @@ const MainAddressCard = (props: IProps) => {
                     />
                 </div>
 
-                <div className="col-3 col-xl-12 current-temperature">
+                <div className="col-2 col-md-3 col-xl-12 current-temperature">
                     <span className="temperature-number">
                         {Math.round(curWeatherData.temp)}
                     </span>

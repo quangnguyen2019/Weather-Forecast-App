@@ -78,11 +78,17 @@ const ExtraAddressCard = (props: IProps) => {
     }, []);
 
     return (
-        <div className="extra-address-card-list row gx-2" onScroll={onScroll}>
+        <div
+            className="extra-address-card-list row gx-2 gy-2 gy-md-0 gy-xl-2"
+            onScroll={onScroll}
+        >
             {dataApp.slice(1).map((data, index) => {
                 const currendData = data.weatherData.current;
                 return (
-                    <div className="col-6 col-lg-4 col-xl-12 mt-xl-2" key={index}>
+                    <div
+                        className="col-4 col-md-6 col-lg-4 col-xl-12"
+                        key={index}
+                    >
                         <div
                             className="extra-address-card "
                             key={index}
@@ -121,8 +127,8 @@ const ExtraAddressCard = (props: IProps) => {
                                     </div>
                                 </div>
 
-                                <div className="col col-xl-5">
-                                    <p className="address address--smaller mb-1">
+                                <div className="col col-xl-5 d-flex align-items-center d-md-block">
+                                    <p className="address address--smaller mb-md-3 mb-xl-1">
                                         <MapPositionIcon
                                             width={17}
                                             height={17}
@@ -133,7 +139,7 @@ const ExtraAddressCard = (props: IProps) => {
                                             {data.address.split(',')[0]}
                                         </span>
                                         <button
-                                            className="button-options"
+                                            className="button-options d-none d-md-inline-block"
                                             data-index={index + 1}
                                             onClick={onClickDropdownBtn}
                                         >
@@ -171,6 +177,32 @@ const ExtraAddressCard = (props: IProps) => {
                                         {Math.round(currendData.temp)}
                                         &deg;
                                     </span>
+
+                                    <button
+                                        className="button-options d-md-none"
+                                        data-index={index + 1}
+                                        onClick={onClickDropdownBtn}
+                                    >
+                                        <CaretDownIcon
+                                            width={10}
+                                            height={10}
+                                            fill={'#fff'}
+                                        />
+                                        {dropdowns[index + 1]?.isOpen && (
+                                            <span
+                                                className="button-remove"
+                                                onClick={() =>
+                                                    onClickRemoveCard(index + 1)
+                                                }
+                                            >
+                                                <TrashIcon
+                                                    width={15}
+                                                    height={15}
+                                                />
+                                                <span>Remove</span>
+                                            </span>
+                                        )}
+                                    </button>
                                 </div>
                             </div>
                         </div>

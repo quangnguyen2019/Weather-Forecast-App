@@ -57,7 +57,9 @@ function App() {
             },
         },
     ]);
-    const [isCurWeatherShowingLeft, setIsCurWeatherShowingLeft] = useState(false);
+    const [isCurWeatherShowingLeft, setIsCurWeatherShowingLeft] = useState(
+        matchMedia('(max-width: 1199px)').matches ? true : false
+    );
 
     const handleChangeUnit = async (newUnit: Units) => {
         getDataMultipleAddress(data, newUnit);
@@ -240,14 +242,19 @@ function App() {
                 <div className="App">
                     <div className="container-fluid app-container">
                         <div className="row h-100">
-                            <div className="col-12 col-xl-9 left-part py-4 px-5">
+                            <div className="col-12 col-xl-9 left-part py-4 px-2 px-sm-4 px-md-5">
                                 <Header
                                     dataApp={data[0]}
                                     handleChangeUnit={handleChangeUnit}
+                                    getWeatherData={getWeatherData}
+                                    getWeatherDataFromCoord={
+                                        getWeatherDataFromCoord
+                                    }
+                                    checkAddressExists={checkAddressExists}
                                 />
 
                                 {isCurWeatherShowingLeft && (
-                                    <div className="row d-xl-none mb-3">
+                                    <div className="row d-xl-none mt-4 mb-3">
                                         <div className="col">
                                             <CurrentWeather
                                                 dataApp={data}
