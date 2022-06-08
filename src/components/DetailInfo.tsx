@@ -1,6 +1,6 @@
-import { IData, Units, getTimeString, ColorLevels } from '../global';
-import { ReactComponent as SunIcon } from '../images/Icons/brightness-high.svg';
-import { ReactComponent as MoonIcon } from '../images/Icons/moon-stars.svg';
+import { IData, Units, ColorLevels } from '../global';
+import { ReactComponent as HumidityIcon } from '../images/Icons/humidity.svg';
+import { ReactComponent as TemperatureIcon } from '../images/Icons/temperature.svg';
 import { ReactComponent as WindDirectionIcon } from '../images/Icons/arrow.svg';
 import { ReactComponent as VisibilityIcon } from '../images/Icons/visibility.svg';
 import { ReactComponent as WindIcon } from '../images/Icons/wind.svg';
@@ -24,35 +24,11 @@ const DetailInfo = ({ dataApp }: IProps) => {
     const uviLevel = getUVLevel(curWeatherData.uvi);
 
     return (
-        <div className="detail-info">
-            <div className="row">
-                <div className="col">
+        <div className="detail-info mt-xl-4">
+            <div className="row gy-3 gx-3">
+                <div className="col-4 col-md">
                     <div className="detail-line-item">
-                        <SunIcon width={22} height={22} fill={'#e6e604'} />
-                        <div className="item-info">
-                            <span className="title">Sunrise</span>
-                            <span className="value">
-                                {getTimeString(curWeatherData.sunrise)}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col">
-                    <div className="detail-line-item">
-                        <MoonIcon width={22} height={22} fill={'#1a6bba'} />
-                        <div className="item-info">
-                            <span className="title">Sunset</span>
-                            <span className="value">
-                                {getTimeString(curWeatherData.sunset)}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col">
-                    <div className="detail-line-item">
-                        <VisibilityIcon width={22} height={22} fill={'#082541'} />
+                        <VisibilityIcon width={21} height={21} />
                         <div className="item-info">
                             <span className="title">Visibility</span>
                             <span className="value">
@@ -62,9 +38,9 @@ const DetailInfo = ({ dataApp }: IProps) => {
                     </div>
                 </div>
 
-                <div className="col">
+                <div className="col-4 col-md">
                     <div className="detail-line-item">
-                        <WindIcon width={22} height={22} fill={'#05d75a'} />
+                        <WindIcon width={21} height={21} />
                         <div className="item-info">
                             <span className="title">Wind</span>
                             <span className="value d-flex align-items-center justify-content-center">
@@ -87,9 +63,9 @@ const DetailInfo = ({ dataApp }: IProps) => {
                     </div>
                 </div>
 
-                <div className="col">
+                <div className="col-4 col-md">
                     <div className="detail-line-item">
-                        <PressureIcon width={22} height={22} fill={'#082541'} />
+                        <PressureIcon width={21} height={21} />
                         <div className="item-info">
                             <span className="title">Pressure</span>
                             <span className="value">
@@ -98,10 +74,32 @@ const DetailInfo = ({ dataApp }: IProps) => {
                         </div>
                     </div>
                 </div>
-
-                <div className="col">
+                <div className="col-4 col-md">
                     <div className="detail-line-item">
-                        <UVIcon width={22} height={22} fill={'#e6e604'} />
+                        <HumidityIcon width={21} height={21} />
+                        <div className="item-info">
+                            <span className="title">Humidity</span>
+                            <span className="value">
+                                {curWeatherData.humidity}%
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-4 col-md">
+                    <div className="detail-line-item">
+                        <TemperatureIcon width={25} height={25} />
+                        <div className="item-info">
+                            <span className="title">Feels Like</span>
+                            <span className="value">
+                                {Math.round(curWeatherData.feels_like)}&deg;
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="col-4 col-md">
+                    <div className="detail-line-item">
+                        <UVIcon width={25} height={25} />
                         <div className="item-info">
                             <span className="title">UV Index</span>
                             <span className="value uv-index-value">

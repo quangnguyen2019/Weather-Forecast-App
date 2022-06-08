@@ -148,7 +148,7 @@ const ExtraAddressCard = (props: IProps) => {
                                                 height={10}
                                                 fill={'#fff'}
                                             />
-                                            {dropdowns[index + 1]?.isOpen && (
+                                            {dropdowns[index + 1].isOpen && (
                                                 <span
                                                     className="button-remove"
                                                     onClick={() =>
@@ -178,6 +178,7 @@ const ExtraAddressCard = (props: IProps) => {
                                         &deg;
                                     </span>
 
+                                    {/* only visible when screen size is below 768px */}
                                     <button
                                         className="button-options d-md-none"
                                         data-index={index + 1}
