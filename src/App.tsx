@@ -217,10 +217,12 @@ function App() {
     };
 
     useEffect(() => {
-        const dataLocal: IData[] = JSON.parse(localStorage.dataWeather);
-        dataLocal
-            ? getDataMultipleAddress(dataLocal, dataLocal[0].unit)
-            : getWeatherData(replaceWhitespace(data[0].address), data[0].unit);
+        if (localStorage.dataWeather) {
+            const dataLocal: IData[] = JSON.parse(localStorage.dataWeather);
+            getDataMultipleAddress(dataLocal, dataLocal[0].unit);
+        } else {
+            getWeatherData(replaceWhitespace(data[0].address), data[0].unit);
+        }
 
         // Show currentWeather component on left side if screen size is less than 1200px
         window.addEventListener('resize', () => {
@@ -242,7 +244,7 @@ function App() {
                 <div className="App">
                     <div className="container-fluid app-container">
                         <div className="row h-100">
-                            <div className="col-12 col-xl-9 left-part py-4 px-2 px-sm-4 px-md-5">
+                            <div className="col-12 col-xl-9 left-part py-4 px-2 px-sm-4 px-md-4 px-lg-5">
                                 <Header
                                     dataApp={data[0]}
                                     handleChangeUnit={handleChangeUnit}
