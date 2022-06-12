@@ -32,7 +32,7 @@ const MainAddressCard = (props: IProps) => {
                     />
                     <span>{dataApp[0].address}</span>
                     <button
-                        className={classNames('button-options', {
+                        className={classNames('button-remove', {
                             'button-disable': dataApp.length === 1,
                         })}
                         data-index="0"

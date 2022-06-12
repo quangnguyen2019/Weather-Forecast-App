@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 
 import { IData, replaceWhitespace, Units } from '../global';
-import { PS_access_key } from '../global';
 import { ReactComponent as SearchIcon } from '../images/Icons/search.svg';
 import { ReactComponent as GPSIcon } from '../images/Icons/gps.svg';
 
@@ -58,7 +57,7 @@ const SearchBox = (props: IProps) => {
                 const lon = pos.coords.longitude;
                 const urlReverseGeocoding =
                     `http://api.positionstack.com/v1/reverse` +
-                    `?access_key=${PS_access_key}&limit=1` +
+                    `?access_key=${process.env.REACT_APP_PS_ACCESS_KEY}&limit=1` +
                     `&query=${lat},${lon}`;
 
                 await fetch(urlReverseGeocoding)

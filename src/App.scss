@@ -1,12 +1,14 @@
 @import './Layouts/variables';
 @import './Layouts/header';
-@import './Layouts//unit_switch';
+@import './Layouts/unit_switch';
 @import './Layouts/search_box';
 @import './Layouts/current_weather';
+@import './Layouts/main_address_card';
+@import './Layouts/extra_address_card';
 @import './Layouts/day_forecast';
 @import './Layouts/weather_chart';
 @import './Layouts/air_pollution';
-@import './Layouts//detail_info';
+@import './Layouts/detail_info';
 
 img {
     max-width: 100%;

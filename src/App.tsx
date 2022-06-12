@@ -10,13 +10,7 @@ import WeatherChart from './components/WeatherChart';
 import AirPollution from './components/AirPollution';
 import SearchBox from './components/SeachBox';
 import DetailInfo from './components/DetailInfo';
-import {
-    PS_access_key,
-    Openweathermap_key,
-    IData,
-    Units,
-    replaceWhitespace,
-} from './global';
+import { IData, Units, replaceWhitespace } from './global';
 
 function App() {
     const [data, setData] = useState<IData[]>([
@@ -74,7 +68,7 @@ function App() {
         // Get coordinates from search value
         const urlForwardGeocoding =
             `http://api.positionstack.com/v1/forward` +
-            `?access_key=${PS_access_key}&limit=1` +
+            `?access_key=${process.env.REACT_APP_PS_ACCESS_KEY}&limit=1` +
             `&query=${searchValue}`;
 
         await fetch(urlForwardGeocoding)
@@ -138,7 +132,7 @@ function App() {
         const urlForecastWeather =
             `https://api.openweathermap.org/data/2.5/onecall` +
             `?lat=${lat}&lon=${lon}&exclude=minutely` +
-            `&units=${unit}&appid=${Openweathermap_key}`;
+            `&units=${unit}&appid=${process.env.REACT_APP_OPENWEATHER_KEY}`;
 
         await fetch(urlForecastWeather)
             .then((res) => res.json())
@@ -184,7 +178,7 @@ function App() {
             return (
                 `https://api.openweathermap.org/data/2.5/onecall` +
                 `?lat=${lat}&lon=${lon}&exclude=minutely` +
-                `&units=${unit}&appid=${Openweathermap_key}`
+                `&units=${unit}&appid=${process.env.REACT_APP_OPENWEATHER_KEY}`
             );
         };
 

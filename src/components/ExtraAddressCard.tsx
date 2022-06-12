@@ -75,7 +75,7 @@ const ExtraAddressCard = (props: IProps) => {
                                             {data.address.split(',')[0]}
                                         </span>
                                         <button
-                                            className="button-options d-none d-md-flex"
+                                            className="button-remove d-none d-md-flex"
                                             data-index={index + 1}
                                             onClick={(e) => {
                                                 e.stopPropagation();
@@ -103,7 +103,7 @@ const ExtraAddressCard = (props: IProps) => {
 
                                     {/* only visible when screen size is below 768px */}
                                     <button
-                                        className="button-options d-md-none"
+                                        className="button-remove d-md-none"
                                         data-index={index + 1}
                                         onClick={(e) => {
                                             e.stopPropagation();

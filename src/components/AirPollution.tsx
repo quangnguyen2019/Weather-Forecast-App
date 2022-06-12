@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { ColorLevels, IData, Openweathermap_key } from '../global';
+import { ColorLevels, IData } from '../global';
 import { ReactComponent as WindIcon } from '../images/Icons/wind.svg';
 
 interface IProps {
@@ -45,7 +45,10 @@ const AirPollution = ({ dataApp }: IProps) => {
     });
 
     const getAirQualityData = async () => {
-        const urlAirPollution = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${dataApp.weatherData.lat}&lon=${dataApp.weatherData.lon}&appid=${Openweathermap_key}`;
+        const urlAirPollution =
+            `http://api.openweathermap.org/data/2.5/air_pollution` +
+            `?lat=${dataApp.weatherData.lat}&lon=${dataApp.weatherData.lon}` +
+            `&appid=${process.env.REACT_APP_OPENWEATHER_KEY}`;
 
         try {
             const response1 = await fetch(urlAirPollution);

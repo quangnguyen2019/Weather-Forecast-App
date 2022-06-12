@@ -1,7 +1,3 @@
-export const PS_access_key = 'e783d1497d866cc660e2f1ffa5e7f0fa';
-export const Openweathermap_key = 'a3de72c34d5f784fd455b6a1dac06004';
-export const AirVisual_key = 'ed4704f1-f263-4822-9f74-9129e5805a6a';
-
 export interface IData {
     address: string;
     unit: Units;
