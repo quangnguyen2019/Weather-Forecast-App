@@ -14,12 +14,13 @@ interface IInitialValue {
 Chart.register(...registerables);
 
 const WeatherChart = ({ dataApp }: { dataApp: IData }) => {
+    const [sizeConditionLabel, setSizeConditionLabel] = useState(10);
     const hourlyData = dataApp.weatherData.hourly;
     const chartData = hourlyData.reduce(
         (total, data) => {
             return {
                 times: [...total.times, getTimeString(data.dt, false)],
-                temps: [...total.temps, data.temp],
+                temps: [...total.temps, Math.round(data.temp)],
                 pop: [...total.pop, data.pop * 100],
                 weatherCondition: [
                     ...total.weatherCondition,
@@ -47,57 +48,87 @@ const WeatherChart = ({ dataApp }: { dataApp: IData }) => {
 
             chart.legend.fit = function fit() {
                 fitValue.bind(chart.legend)();
-                return (this.height += 5);
+                return (this.height += 10);
             };
         },
     };
 
-    const myFunc = () => {
-        if (window.innerWidth >= 1455) {
-            Chart.defaults.font.size = 12;
-        } else if (window.innerWidth >= 1365) {
+    const changeFontSize = () => {
+        if (window.innerWidth >= 1271) {
+            setSizeConditionLabel(10);
+        } else if (window.innerWidth >= 1250) {
+            setSizeConditionLabel(9.5);
+        } else if (window.innerWidth >= 1200) {
+            setSizeConditionLabel(9);
+        } else if (window.innerWidth >= 1015) {
+            setSizeConditionLabel(11);
+        } else if (window.innerWidth >= 992) {
+            setSizeConditionLabel(10);
+        } else if (window.innerWidth >= 915) {
+            setSizeConditionLabel(11);
+        } else if (window.innerWidth >= 860) {
+            setSizeConditionLabel(10);
+        } else if (window.innerWidth >= 800) {
             Chart.defaults.font.size = 11;
-        } else if (window.innerWidth >= 1275) {
-            Chart.defaults.font.size = 10;
+            setSizeConditionLabel(9);
+        } else if (window.innerWidth >= 771) {
+            setSizeConditionLabel(8.7);
+        } else if (window.innerWidth >= 768) {
+            Chart.defaults.font.size = 11;
+        } else if (window.innerWidth >= 470) {
+            Chart.defaults.font.size = 12;
+            setSizeConditionLabel(11);
+        } else if (window.innerWidth >= 442) {
+            Chart.defaults.font.size = 12;
+            setSizeConditionLabel(10);
+        } else if (window.innerWidth >= 412) {
+            setSizeConditionLabel(9);
         } else {
-            Chart.defaults.font.size = 9;
+            Chart.defaults.font.size = 10.5;
+            setSizeConditionLabel(9);
         }
-        // console.log(window.innerWidth);
-        // console.log(Chart.defaults.font.size);
     };
 
     useEffect(() => {
-        window.addEventListener('resize', myFunc);
-        return () => window.removeEventListener('resize', myFunc);
+        Chart.defaults.font.size = 12;
+        window.addEventListener('resize', changeFontSize);
+        return () => window.removeEventListener('resize', changeFontSize);
     }, []);
+
+    useEffect(() => {
+        changeFontSize();
+    }, [dataApp]);
+
+    const dataChart = {
+        labels: timeLabels,
+        datasets: [
+            {
+                label: `Temperature ( °${
+                    dataApp.unit === 'metric' ? 'C' : 'F'
+                } ) `,
+                data: tempDataNested,
+                borderColor: '#dc3545',
+                backgroundColor: 'rgba(255,0,0,0.5)',
+                tension: 0.4,
+                fill: false,
+            },
+            {
+                label: 'Precipitation ( % ) ',
+                data: popDataNested,
+                borderColor: '#36a2eb',
+                backgroundColor: '#36a2eb80',
+                tension: 0.4,
+                fill: false,
+            },
+        ],
+    };
 
     return (
         <div className="chart-container">
             <Line
-                data={{
-                    labels: timeLabels,
-                    datasets: [
-                        {
-                            label: `Temperature ( °${
-                                dataApp.unit === 'metric' ? 'C' : 'F'
-                            } )`,
-                            data: tempDataNested,
-                            borderColor: '#dc3545',
-                            backgroundColor: 'rgba(255,0,0,0.5)',
-                            tension: 0.4,
-                            fill: false,
-                        },
-                        {
-                            label: 'Precipitation ( % )',
-                            data: popDataNested,
-                            borderColor: '#36a2eb',
-                            backgroundColor: '#36a2eb80',
-                            tension: 0.4,
-                            fill: false,
-                        },
-                    ],
-                }}
+                data={dataChart}
                 options={{
+                    maintainAspectRatio: false,
                     scales: {
                         x: {
                             grid: { display: false, drawBorder: false },
@@ -107,6 +138,9 @@ const WeatherChart = ({ dataApp }: { dataApp: IData }) => {
                             grid: { display: false, drawBorder: false },
                             position: 'bottom',
                             labels: conditionLabels,
+                            ticks: {
+                                font: { size: sizeConditionLabel },
+                            },
                         },
                         y: {
                             grid: { drawBorder: false },
@@ -118,10 +152,16 @@ const WeatherChart = ({ dataApp }: { dataApp: IData }) => {
                     plugins: {
                         legend: {
                             labels: {
-                                boxWidth: 15,
-                                boxHeight: 10,
+                                boxWidth: 8,
+                                boxHeight: 8,
+                                usePointStyle: true,
                             },
+                            align: 'end',
                         },
+                    },
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
                     },
                 }}
                 plugins={[legendMarginBottom]}

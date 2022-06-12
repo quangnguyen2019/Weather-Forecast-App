@@ -21,7 +21,7 @@
 
     .title {
         color: #bdc3db;
-        font-size: 12px;
+        font-size: 11px;
         text-transform: uppercase;
     }
 
@@ -86,6 +86,14 @@
             > svg {
                 display: none;
             }
+        }
+    }
+
+    @media screen and (max-width: 399px) {
+        padding: 20px 15px;
+
+        .value {
+            font-size: 15px;
         }
     }
 }

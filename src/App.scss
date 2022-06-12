@@ -24,21 +24,6 @@ img {
     position: absolute;
     inset: 0;
 
-    .app-background {
-        background-image: url(./images//back1.webp);
-        position: absolute;
-        inset: 0;
-        z-index: -1;
-
-        &::before {
-            content: '';
-            background-color: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(8px);
-            position: absolute;
-            inset: 0;
-        }
-    }
-
     .app-container {
         background-color: rgb(255, 255, 255);
         overflow: hidden;
@@ -103,6 +88,13 @@ img {
 
         &:hover {
             background-color: rgb(143, 143, 143);
+        }
+    }
+
+    @media screen and (max-width: 767.98px) {
+        ::-webkit-scrollbar {
+            display: none;
+            scrollbar-width: none;
         }
     }
 }

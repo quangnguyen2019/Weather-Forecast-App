@@ -1,10 +1,9 @@
-import { MouseEvent, useState, UIEvent, useEffect } from 'react';
+import { MouseEvent } from 'react';
 
 import { ReactComponent as TemperatureIcon } from '../images/Icons/temperature.svg';
 import { ReactComponent as HumidityIcon } from '../images/Icons/humidity.svg';
 import { ReactComponent as MapPositionIcon } from '../images/Icons/map-position.svg';
-import { ReactComponent as CaretDownIcon } from '../images/Icons/caret-down-fill.svg';
-import { ReactComponent as TrashIcon } from '../images/Icons/trash3.svg';
+import { ReactComponent as XIcon } from '../images/Icons/x.svg';
 import { IData } from '../global';
 
 interface IProps {
@@ -16,72 +15,10 @@ interface IProps {
 }
 
 const ExtraAddressCard = (props: IProps) => {
-    const {
-        dataApp,
-        onClickDropdownBtn,
-        dropdowns,
-        onClickRemoveCard,
-        onClickCard,
-    } = props;
-    const [scrollToEnd, setScrollToEnd] = useState({ left: true, right: false });
-
-    const scrollPrev = () => {
-        const list = document.querySelector('.extra-address-card-list');
-        if (list) {
-            list.scrollLeft -= 300;
-        }
-    };
-
-    const scrollNext = () => {
-        const list = document.querySelector('.extra-address-card-list');
-        if (list) {
-            list.scrollLeft += 300;
-        }
-    };
-
-    const hideOrShowScrollBtn = (element: Element) => {
-        const clientWidth = element.clientWidth;
-        const scrollLeft = element.scrollLeft;
-        const scrollWidth = element.scrollWidth;
-
-        if (scrollLeft === 0 && clientWidth + scrollLeft >= scrollWidth) {
-            // end left, end right
-            setScrollToEnd({ left: true, right: true });
-        } else if (scrollLeft === 0) {
-            // end left
-            setScrollToEnd({ left: true, right: false });
-        } else if (clientWidth + scrollLeft >= scrollWidth) {
-            // end right
-            setScrollToEnd({ left: false, right: true });
-        } else if (scrollToEnd.left === true || scrollToEnd.right === true) {
-            // not end left, not end right
-            setScrollToEnd({ left: false, right: false });
-        }
-    };
-
-    const onScroll = ({ target }: UIEvent) => {
-        hideOrShowScrollBtn(target as HTMLDivElement);
-    };
-
-    useEffect(() => {
-        const extraCardList = document.getElementsByClassName(
-            'extra-address-card-list'
-        )[0];
-        hideOrShowScrollBtn(extraCardList);
-    }, [dataApp]);
-
-    useEffect(() => {
-        const reRender = () => {};
-
-        window.addEventListener('resize', () => reRender());
-        return () => reRender();
-    }, []);
+    const { dataApp, onClickRemoveCard, onClickCard } = props;
 
     return (
-        <div
-            className="extra-address-card-list row gx-2 gy-2 gy-md-0 gy-xl-2"
-            onScroll={onScroll}
-        >
+        <div className="extra-address-card-list row gx-2 gy-2 gy-md-0 gy-xl-2">
             {dataApp.slice(1).map((data, index) => {
                 const currendData = data.weatherData.current;
                 return (
@@ -133,37 +70,23 @@ const ExtraAddressCard = (props: IProps) => {
                                             width={17}
                                             height={17}
                                             fill={'#fff'}
-                                            style={{ marginRight: 6 }}
                                         />
                                         <span title={data.address.split(',')[0]}>
                                             {data.address.split(',')[0]}
                                         </span>
                                         <button
-                                            className="button-options d-none d-md-inline-block"
+                                            className="button-options d-none d-md-flex"
                                             data-index={index + 1}
-                                            onClick={onClickDropdownBtn}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                onClickRemoveCard(index + 1);
+                                            }}
                                         >
-                                            <CaretDownIcon
-                                                width={10}
-                                                height={10}
+                                            <XIcon
+                                                width={18}
+                                                height={18}
                                                 fill={'#fff'}
                                             />
-                                            {dropdowns[index + 1].isOpen && (
-                                                <span
-                                                    className="button-remove"
-                                                    onClick={() =>
-                                                        onClickRemoveCard(
-                                                            index + 1
-                                                        )
-                                                    }
-                                                >
-                                                    <TrashIcon
-                                                        width={15}
-                                                        height={15}
-                                                    />
-                                                    <span>Remove</span>
-                                                </span>
-                                            )}
                                         </button>
                                     </p>
                                     <div className="d-flex d-xl-none justify-content-center">
@@ -182,27 +105,16 @@ const ExtraAddressCard = (props: IProps) => {
                                     <button
                                         className="button-options d-md-none"
                                         data-index={index + 1}
-                                        onClick={onClickDropdownBtn}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            onClickRemoveCard(index + 1);
+                                        }}
                                     >
-                                        <CaretDownIcon
-                                            width={10}
-                                            height={10}
+                                        <XIcon
+                                            width={18}
+                                            height={18}
                                             fill={'#fff'}
                                         />
-                                        {dropdowns[index + 1]?.isOpen && (
-                                            <span
-                                                className="button-remove"
-                                                onClick={() =>
-                                                    onClickRemoveCard(index + 1)
-                                                }
-                                            >
-                                                <TrashIcon
-                                                    width={15}
-                                                    height={15}
-                                                />
-                                                <span>Remove</span>
-                                            </span>
-                                        )}
                                     </button>
                                 </div>
                             </div>
@@ -210,22 +122,6 @@ const ExtraAddressCard = (props: IProps) => {
                     </div>
                 );
             })}
-            {!scrollToEnd.left && (
-                <button
-                    className="btn-prev btn-prev--second d-xl-none"
-                    onClick={scrollPrev}
-                >
-                    &lt;
-                </button>
-            )}
-            {!scrollToEnd.right && (
-                <button
-                    className="btn-next btn-next--second d-xl-none"
-                    onClick={scrollNext}
-                >
-                    &gt;
-                </button>
-            )}
         </div>
     );
 };

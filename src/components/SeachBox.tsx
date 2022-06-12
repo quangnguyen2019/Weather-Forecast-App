@@ -15,6 +15,7 @@ interface IProps {
         newAddress: string
     ) => Promise<void>;
     checkAddressExists: (newAddress: string) => boolean;
+    hideSearchBox?: () => void;
 }
 
 const SearchBox = (props: IProps) => {
@@ -23,6 +24,7 @@ const SearchBox = (props: IProps) => {
         getWeatherData,
         getWeatherDataFromCoord,
         checkAddressExists,
+        hideSearchBox,
     } = props;
     const inputEl = useRef<HTMLInputElement>(null);
 
@@ -32,6 +34,7 @@ const SearchBox = (props: IProps) => {
         if (e.key === 'Enter' && value.length >= 3 && inputEl.current) {
             getWeatherData(value, dataApp.unit);
             inputEl.current.value = '';
+            hideSearchBox?.();
         }
     };
 
@@ -42,6 +45,7 @@ const SearchBox = (props: IProps) => {
             if (searchValue.length >= 3) {
                 getWeatherData(searchValue, dataApp.unit);
                 inputEl.current.value = '';
+                hideSearchBox?.();
             }
         }
     };
@@ -77,6 +81,7 @@ const SearchBox = (props: IProps) => {
                 }
             });
         }
+        hideSearchBox?.();
     };
 
     return (
@@ -87,6 +92,7 @@ const SearchBox = (props: IProps) => {
                 placeholder="Search for location"
                 onKeyUp={search}
                 ref={inputEl}
+                onClick={(e) => e.stopPropagation()}
             />
             <span className="small-note">
                 The search value must be at least 3 characters

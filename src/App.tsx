@@ -57,7 +57,7 @@ function App() {
             },
         },
     ]);
-    const [isCurWeatherShowingLeft, setIsCurWeatherShowingLeft] = useState(
+    const [isScreenUnder1200px, setIsScreenUnder1200px] = useState(
         matchMedia('(max-width: 1199px)').matches ? true : false
     );
 
@@ -227,9 +227,9 @@ function App() {
         // Show currentWeather component on left side if screen size is less than 1200px
         window.addEventListener('resize', () => {
             if (window.matchMedia('(max-width: 1199px)').matches) {
-                setIsCurWeatherShowingLeft(true);
+                setIsScreenUnder1200px(true);
             } else {
-                setIsCurWeatherShowingLeft(false);
+                setIsScreenUnder1200px(false);
             }
         });
     }, []);
@@ -255,7 +255,7 @@ function App() {
                                     checkAddressExists={checkAddressExists}
                                 />
 
-                                {isCurWeatherShowingLeft && (
+                                {isScreenUnder1200px && (
                                     <div className="row d-xl-none mt-4 mb-3">
                                         <div className="col">
                                             <CurrentWeather
@@ -275,32 +275,32 @@ function App() {
                                 </div>
 
                                 <div className="row gx-2">
-                                    <div className="col-6">
+                                    <div className="col-12 col-md-6">
                                         <WeatherChart dataApp={data[0]} />
                                     </div>
-                                    <div className="col-6">
+                                    <div className="col-12 col-md-6 mt-3 mt-md-0">
                                         <AirPollution dataApp={data[0]} />
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="col-0 col-xl-3 right-part py-4 px-4">
-                                <SearchBox
-                                    dataApp={data[0]}
-                                    getWeatherData={getWeatherData}
-                                    getWeatherDataFromCoord={
-                                        getWeatherDataFromCoord
-                                    }
-                                    checkAddressExists={checkAddressExists}
-                                />
+                            {!isScreenUnder1200px && (
+                                <div className="col-xl-3 right-part py-4 px-4">
+                                    <SearchBox
+                                        dataApp={data[0]}
+                                        getWeatherData={getWeatherData}
+                                        getWeatherDataFromCoord={
+                                            getWeatherDataFromCoord
+                                        }
+                                        checkAddressExists={checkAddressExists}
+                                    />
 
-                                {!isCurWeatherShowingLeft && (
                                     <CurrentWeather
                                         dataApp={data}
                                         setDataApp={setData}
                                     />
-                                )}
-                            </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

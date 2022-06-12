@@ -13,6 +13,7 @@ $padding-y: 3px;
         border-radius: $border-radius 0 0 $border-radius;
         outline: none;
         padding: $padding-y $padding-x;
+        width: 80%;
 
         &::placeholder {
             color: $light-blue;
@@ -42,5 +43,26 @@ $padding-y: 3px;
         border-radius: 0 $border-radius $border-radius 0;
         background-color: #fff;
         outline: none;
+    }
+
+    @media screen and (max-width: 767px) {
+        .search-box {
+            width: 50%;
+            padding: 10px 20px;
+        }
+
+        .small-note {
+            color: white;
+            top: 50px;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            font-size: 12px;
+            font-weight: 500;
+        }
+    }
+
+    @media screen and (max-width: 575px) {
+        .search-box {
+            width: 70%;
+        }
     }
 }

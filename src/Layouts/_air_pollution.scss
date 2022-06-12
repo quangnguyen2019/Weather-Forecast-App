@@ -54,11 +54,12 @@
         & > span:first-child {
             font-weight: 500;
             margin-bottom: 6px;
+            font-size: 14px;
         }
 
         & > span:nth-child(2) {
             text-transform: uppercase;
-            font-size: 13px;
+            font-size: 12px;
         }
 
         &::before {
@@ -68,6 +69,17 @@
             inset: 0;
             background-color: currentColor;
             opacity: 0.1;
+        }
+    }
+
+    @media screen and (max-width: 991px) {
+        .evaluation-info {
+            > span:first-child {
+                font-size: 18px;
+            }
+            > span:nth-child(2) {
+                font-size: 15px;
+            }
         }
     }
 }

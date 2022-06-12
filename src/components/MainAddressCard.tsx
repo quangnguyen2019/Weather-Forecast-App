@@ -4,8 +4,7 @@ import classNames from 'classnames';
 import { ReactComponent as TemperatureIcon } from '../images/Icons/temperature.svg';
 import { ReactComponent as HumidityIcon } from '../images/Icons/humidity.svg';
 import { ReactComponent as MapPositionIcon } from '../images/Icons/map-position.svg';
-import { ReactComponent as CaretDownIcon } from '../images/Icons/caret-down-fill.svg';
-import { ReactComponent as TrashIcon } from '../images/Icons/trash3.svg';
+import { ReactComponent as XIcon } from '../images/Icons/x.svg';
 import { IData, Units } from '../global';
 
 interface IProps {
@@ -16,7 +15,7 @@ interface IProps {
 }
 
 const MainAddressCard = (props: IProps) => {
-    const { dataApp, onClickDropdownBtn, dropdowns, onClickRemoveCard } = props;
+    const { dataApp, onClickRemoveCard } = props;
     const curWeatherData = dataApp[0].weatherData.current;
     const today = dataApp[0].weatherData.daily[0];
     const currentHour = new Date(curWeatherData.dt * 1000).getHours();
@@ -37,19 +36,13 @@ const MainAddressCard = (props: IProps) => {
                             'button-disable': dataApp.length === 1,
                         })}
                         data-index="0"
-                        onClick={onClickDropdownBtn}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onClickRemoveCard(0);
+                        }}
                         disabled={dataApp.length === 1}
                     >
-                        <CaretDownIcon width={10} height={10} fill={'#fff'} />
-                        {dropdowns[0].isOpen && (
-                            <span
-                                className="button-remove"
-                                onClick={() => onClickRemoveCard(0)}
-                            >
-                                <TrashIcon width={15} height={15} />
-                                <span>Remove</span>
-                            </span>
-                        )}
+                        <XIcon width={18} height={18} fill={'#fff'} />
                     </button>
                 </p>
 

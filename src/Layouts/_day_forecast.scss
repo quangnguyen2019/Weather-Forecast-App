@@ -5,8 +5,19 @@
 
     .row-forecast-list {
         flex-wrap: nowrap;
-        overflow: hidden;
+        overflow-x: scroll;
         padding: 10px 0;
+        scroll-snap-type: x mandatory;
+        transition: all 0.2s;
+
+        &::-webkit-scrollbar {
+            scrollbar-width: none;
+            display: none;
+        }
+
+        > [class*='col'] {
+            scroll-snap-align: start;
+        }
     }
 
     &-item {
@@ -40,5 +51,8 @@
     }
 
     @media screen and (max-width: 991px) {
+        .date {
+            font-size: 15px;
+        }
     }
 }

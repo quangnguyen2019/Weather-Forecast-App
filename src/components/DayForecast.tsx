@@ -1,5 +1,8 @@
 import { UIEvent, useState } from 'react';
+
 import { IData } from '../global';
+import { ReactComponent as CaretLeftIcon } from '../images/Icons/caret-left.svg';
+import { ReactComponent as CaretRightIcon } from '../images/Icons/caret-right.svg';
 
 interface IProps {
     dataApp: IData;
@@ -58,7 +61,7 @@ const DayForecast = ({ dataApp }: IProps) => {
             <div className="day-forecast-list">
                 <div className="row gx-2 row-forecast-list" onScroll={onScroll}>
                     {dailyWeatherData.map((data, index) => (
-                        <div className="col-4 col-sm-3 col-md-2" key={index}>
+                        <div className="col-6 col-sm-3 col-md-2" key={index}>
                             <div className="day-forecast-item">
                                 <div className="date">{getDate(data.dt)}</div>
                                 <div className="row gx-2">
@@ -83,12 +86,14 @@ const DayForecast = ({ dataApp }: IProps) => {
 
                     {!scrollToEnd.left && (
                         <button className="btn-prev" onClick={scrollPrev}>
-                            &lt;
+                            {/* <span>&lt;</span> */}
+                            <CaretLeftIcon width={16} height={16} />
                         </button>
                     )}
                     {!scrollToEnd.right && (
                         <button className="btn-next" onClick={scrollNext}>
-                            &gt;
+                            {/* <span>&gt;</span> */}
+                            <CaretRightIcon width={16} height={16} />
                         </button>
                     )}
                 </div>

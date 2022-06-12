@@ -118,10 +118,10 @@ const AirPollution = ({ dataApp }: IProps) => {
                     </div>
                 </div>
             </div>
-            <div className="components row gx-2">
+            <div className="components row gy-2 gx-2 gx-md-1 gx-xl-2">
                 {Object.keys(airQualityData.components).map((key, index) => {
                     return (
-                        <div className="col" key={index}>
+                        <div className="col-4 col-sm" key={index}>
                             <div className="component-item">
                                 <span>
                                     {

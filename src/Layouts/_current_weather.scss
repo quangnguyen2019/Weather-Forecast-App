@@ -8,6 +8,10 @@
         padding: 24px 20px;
         position: relative;
         box-shadow: $box-shadow;
+
+        .detail-item {
+            font-size: 0.931em;
+        }
     }
 
     .extra-address-card {
@@ -16,6 +20,11 @@
         padding: 12px 16px;
         cursor: pointer;
         box-shadow: $box-shadow;
+
+        .button-options {
+            margin-left: 0;
+            padding-left: 6px;
+        }
     }
 
     .address {
@@ -27,6 +36,11 @@
         &--smaller {
             font-size: 13px;
             justify-content: right;
+        }
+
+        &--smaller > svg {
+            margin-right: 6px;
+            min-width: 16px;
         }
 
         &--smaller > span {
@@ -95,7 +109,7 @@
     }
 
     .detail-item {
-        font-size: 0.95em;
+        font-size: 0.9em;
         font-weight: 500;
 
         > .col:first-child {
@@ -119,7 +133,8 @@
         display: flex;
         outline: none;
         transition: all 0.2s;
-        margin-left: 2px;
+        margin-left: auto;
+        padding: 0;
 
         &:hover > svg {
             fill: rgba(255, 255, 255, 0.788);
@@ -252,7 +267,16 @@
         .extra-address-card-list {
             height: 100%;
             flex-wrap: nowrap;
-            overflow: hidden;
+            overflow-x: scroll;
+
+            &::-webkit-scrollbar {
+                display: none;
+                scrollbar-width: none;
+            }
+
+            .button-options {
+                margin-left: auto;
+            }
 
             .btn-prev,
             .btn-next {
@@ -339,8 +363,11 @@
         }
 
         .extra-address-card-list {
+            scroll-snap-type: x mandatory;
+
             & > [class*='col'] {
-                flex-basis: 220px;
+                flex-basis: 225px;
+                scroll-snap-align: center;
             }
 
             .btn-prev--second,
@@ -362,7 +389,7 @@
 
             .address--smaller {
                 font-size: 13px;
-                margin: 0;
+                margin: 0 10px 0 0;
 
                 > span {
                     width: 5rem;
@@ -389,6 +416,10 @@
             .temperature-number {
                 font-size: 36px;
             }
+
+            .current-image > img {
+                width: 70%;
+            }
         }
 
         .extra-address-card-list {
@@ -397,6 +428,39 @@
             }
             .btn-next--second {
                 right: 9px !important;
+            }
+        }
+    }
+
+    @media screen and (max-width: 449px) {
+        .main-address-card {
+            .current-image > img {
+                width: 85%;
+            }
+        }
+    }
+
+    @media screen and (max-width: 399px) {
+        .main-address-card {
+            .current-image > img {
+                width: 100%;
+            }
+
+            .temperature-number {
+                font-size: 32px;
+                margin-left: 35px;
+            }
+
+            .current-description {
+                margin-left: 38px;
+
+                > p:first-child {
+                    font-size: 16px;
+                }
+
+                > p:nth-child(2) {
+                    font-size: 13px;
+                }
             }
         }
     }
