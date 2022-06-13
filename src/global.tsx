@@ -61,7 +61,7 @@ export enum Units {
 
 export enum ColorLevels {
     Green = '#05d75a',
-    Yellow = '#fdd64b',
+    Yellow = '#f5c313',
     Orange = 'orange',
     Red = '#e10303',
     Purple = '#ad00ad',
