@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/weather-forecast-app/static/css/main.74894197.css",
-    "main.js": "/weather-forecast-app/static/js/main.b2f69dfe.js",
+    "main.css": "/weather-forecast-app/static/css/main.86a0df82.css",
+    "main.js": "/weather-forecast-app/static/js/main.59ffe9f7.js",
     "static/media/humidity.svg": "/weather-forecast-app/static/media/humidity.a5777ae77f00c4697dd9f33f76d851e1.svg",
     "static/media/map-position.svg": "/weather-forecast-app/static/media/map-position.f48a9b66e0602445577f46dca8b784d0.svg",
     "static/media/visibility.svg": "/weather-forecast-app/static/media/visibility.592ca8b296be6826178bee2487c81321.svg",
@@ -16,11 +16,11 @@
     "static/media/x.svg": "/weather-forecast-app/static/media/x.85f9f2a1f603d5a966a44474678a7981.svg",
     "static/media/caret-right.svg": "/weather-forecast-app/static/media/caret-right.749907dd43ccad5530eb6bcaaecaa301.svg",
     "static/media/caret-left.svg": "/weather-forecast-app/static/media/caret-left.96952551ed47a3420285023f3f88e0d0.svg",
-    "main.74894197.css.map": "/weather-forecast-app/static/css/main.74894197.css.map",
-    "main.b2f69dfe.js.map": "/weather-forecast-app/static/js/main.b2f69dfe.js.map"
+    "main.86a0df82.css.map": "/weather-forecast-app/static/css/main.86a0df82.css.map",
+    "main.59ffe9f7.js.map": "/weather-forecast-app/static/js/main.59ffe9f7.js.map"
   },
   "entrypoints": [
-    "static/css/main.74894197.css",
-    "static/js/main.b2f69dfe.js"
+    "static/css/main.86a0df82.css",
+    "static/js/main.59ffe9f7.js"
   ]
 }
