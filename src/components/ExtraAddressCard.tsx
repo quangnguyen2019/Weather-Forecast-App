@@ -92,7 +92,7 @@ const ExtraAddressCard = (props: IProps) => {
                                     <div className="d-flex d-xl-none justify-content-center">
                                         <img
                                             className="extra-card-image"
-                                            src={`http://openweathermap.org/img/wn/${currendData.weather[0].icon}@2x.png`}
+                                            src={`https://openweathermap.org/img/wn/${currendData.weather[0].icon}@2x.png`}
                                             alt=""
                                         />
                                     </div>

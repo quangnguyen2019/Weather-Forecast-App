@@ -52,7 +52,7 @@ const MainAddressCard = (props: IProps) => {
 
                 <div className="col-2 col-xl-12 current-image">
                     <img
-                        src={`http://openweathermap.org/img/wn/${curWeatherData.weather[0].icon}@2x.png`}
+                        src={`https://openweathermap.org/img/wn/${curWeatherData.weather[0].icon}@2x.png`}
                         alt=""
                     />
                 </div>

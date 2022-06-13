@@ -67,7 +67,7 @@ const DayForecast = ({ dataApp }: IProps) => {
                                 <div className="row gx-2">
                                     <div className="col item-img">
                                         <img
-                                            src={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
+                                            src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
                                             alt=""
                                         />
                                     </div>
