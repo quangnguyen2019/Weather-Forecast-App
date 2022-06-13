@@ -78,8 +78,16 @@ const Header = (props: IPropHeader) => {
 
         currentDate.innerHTML = `${day}, ${date} ${month}, ${year}`;
 
+        // hide search box when clicking outside
         document.addEventListener('click', () => {
             setIsSearchBoxVisible(false);
+        });
+
+        // hide search box when resizing window
+        window.addEventListener('resize', () => {
+            if (isSearchBoxVisible) {
+                setIsSearchBoxVisible(false);
+            }
         });
     }, []);
 
