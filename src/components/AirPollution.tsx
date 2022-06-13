@@ -22,7 +22,7 @@ const aqiLevels = {
     },
     poor: {
         level: 'Poor',
-        desc: 'Health warnings of emergency conditions.',
+        desc: 'Everyone may begin to experience health effects.',
     },
     veryPoor: {
         level: 'Very Poor',
@@ -46,7 +46,7 @@ const AirPollution = ({ dataApp }: IProps) => {
 
     const getAirQualityData = async () => {
         const urlAirPollution =
-            `http://api.openweathermap.org/data/2.5/air_pollution` +
+            `https://api.openweathermap.org/data/2.5/air_pollution` +
             `?lat=${dataApp.weatherData.lat}&lon=${dataApp.weatherData.lon}` +
             `&appid=${process.env.REACT_APP_OPENWEATHER_KEY}`;
 

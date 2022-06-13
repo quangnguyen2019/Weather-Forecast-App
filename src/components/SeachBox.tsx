@@ -99,9 +99,9 @@ const SearchBox = (props: IProps) => {
                 ref={inputEl}
                 onClick={(e) => e.stopPropagation()}
             />
-            {/* <span className="small-note">
-                The search value must be at least 3 characters
-            </span> */}
+            <span className="small-note">
+                The search value should be at least 3 characters
+            </span>
 
             <button
                 className="btn-detect-location"
