@@ -7,6 +7,10 @@
         display: flex;
         align-items: center;
 
+        & > span {
+            max-width: 11.5rem;
+        }
+
         &--smaller {
             font-size: 13px;
             justify-content: right;

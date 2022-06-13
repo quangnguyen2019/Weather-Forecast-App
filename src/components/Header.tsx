@@ -100,7 +100,7 @@ const Header = (props: IPropHeader) => {
                     <p className="current-date" ref={dateRef}></p>
                 </div>
             </div>
-            <div className="col-3 col-md-8 header-actions">
+            <div className="col-3 col-md-8 header-actions mt-1">
                 {isSearchBoxVisible && (
                     <div className="overlay">
                         <div className="overlay-content">

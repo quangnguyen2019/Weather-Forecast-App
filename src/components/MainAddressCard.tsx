@@ -30,7 +30,11 @@ const MainAddressCard = (props: IProps) => {
                         fill={'#fff'}
                         style={{ marginRight: 8 }}
                     />
-                    <span>{dataApp[0].address}</span>
+                    <span title={dataApp[0].address}>
+                        {matchMedia('(max-width: 1199px)').matches
+                            ? dataApp[0].address
+                            : dataApp[0].address.split(',')[0]}
+                    </span>
                     <button
                         className={classNames('button-remove', {
                             'button-disable': dataApp.length === 1,

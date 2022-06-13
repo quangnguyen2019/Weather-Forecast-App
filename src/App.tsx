@@ -67,29 +67,38 @@ function App() {
 
         // Get coordinates from search value
         const urlForwardGeocoding =
-            `http://api.positionstack.com/v1/forward` +
-            `?access_key=${process.env.REACT_APP_PS_ACCESS_KEY}&limit=1` +
-            `&query=${searchValue}`;
+            `https://geocode.search.hereapi.com/v1/geocode` +
+            `?q=${searchValue}&lang=en-US` +
+            `&apiKey=${process.env.REACT_APP_HERE_KEY}`;
 
         await fetch(urlForwardGeocoding)
             .then((res) => res.json())
             .then((res) => {
-                if (!res.data.length) return;
+                if (res.items.length === 0) return;
 
-                const dataSeperated = res.data[0];
-                [lat, lon] = [dataSeperated.latitude, dataSeperated.longitude];
+                const dataSeperated = res.items[0];
+                const addressData = dataSeperated.address;
+
+                [lat, lon] = [
+                    dataSeperated.position.lat,
+                    dataSeperated.position.lng,
+                ];
 
                 // store address into newAddress
-                if (
-                    dataSeperated.county &&
-                    dataSeperated.county !== dataSeperated.region
-                ) {
-                    newAddress = `${dataSeperated.county}, ${dataSeperated.region}`;
-                } else {
-                    newAddress = `${dataSeperated.region}, ${dataSeperated.country}`;
+                if (addressData.city) {
+                    if (addressData.city !== addressData.county) {
+                        newAddress = addressData.state
+                            ? `${addressData.city}, ${addressData.state}`
+                            : `${addressData.city}, ${addressData.county}`;
+                    } else {
+                        newAddress = `${addressData.county}, ${addressData.countryName}`;
+                    }
+                } else if (addressData.county) {
+                    newAddress = `${addressData.county}, ${addressData.countryName}`;
+                } else if (addressData.state) {
+                    newAddress = `${addressData.state}, ${addressData.countryName}`;
                 }
-            })
-            .catch((err) => console.error(err));
+            });
 
         // Check error when lat === 0 || lon === 0
         if (lat === 0 || lon === 0) return;

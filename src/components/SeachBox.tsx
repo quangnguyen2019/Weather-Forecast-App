@@ -30,7 +30,7 @@ const SearchBox = (props: IProps) => {
     const search = async (e: any) => {
         let value = replaceWhitespace(e.target.value);
 
-        if (e.key === 'Enter' && value.length >= 3 && inputEl.current) {
+        if (e.key === 'Enter' && inputEl.current) {
             getWeatherData(value, dataApp.unit);
             inputEl.current.value = '';
             hideSearchBox?.();
@@ -56,21 +56,27 @@ const SearchBox = (props: IProps) => {
                 const lat = pos.coords.latitude;
                 const lon = pos.coords.longitude;
                 const urlReverseGeocoding =
-                    `http://api.positionstack.com/v1/reverse` +
-                    `?access_key=${process.env.REACT_APP_PS_ACCESS_KEY}&limit=1` +
-                    `&query=${lat},${lon}`;
+                    `https://revgeocode.search.hereapi.com/v1/revgeocode` +
+                    `?at=${lat},${lon}&lang=en-US` +
+                    `&apiKey=${process.env.REACT_APP_HERE_KEY}`;
 
                 await fetch(urlReverseGeocoding)
                     .then((res) => res.json())
                     .then((res) => {
-                        const dataSeperated = res.data[0];
-                        if (
-                            dataSeperated.county &&
-                            dataSeperated.county !== dataSeperated.region
-                        ) {
-                            newAddress = `${dataSeperated.county}, ${dataSeperated.region}`;
-                        } else {
-                            newAddress = `${dataSeperated.region}, ${dataSeperated.country}`;
+                        const addressData = res.items[0].address;
+
+                        if (addressData.city) {
+                            if (addressData.city !== addressData.county) {
+                                newAddress = addressData.state
+                                    ? `${addressData.city}, ${addressData.state}`
+                                    : `${addressData.city}, ${addressData.county}`;
+                            } else {
+                                newAddress = `${addressData.county}, ${addressData.countryName}`;
+                            }
+                        } else if (addressData.county) {
+                            newAddress = `${addressData.county}, ${addressData.countryName}`;
+                        } else if (addressData.state) {
+                            newAddress = `${addressData.state}, ${addressData.countryName}`;
                         }
                     });
 
@@ -93,9 +99,9 @@ const SearchBox = (props: IProps) => {
                 ref={inputEl}
                 onClick={(e) => e.stopPropagation()}
             />
-            <span className="small-note">
+            {/* <span className="small-note">
                 The search value must be at least 3 characters
-            </span>
+            </span> */}
 
             <button
                 className="btn-detect-location"

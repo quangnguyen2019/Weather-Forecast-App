@@ -211,6 +211,10 @@
           align-items: center;
 }
 
+.current-weather .address > span {
+  max-width: 11.5rem;
+}
+
 .current-weather .address--smaller {
   font-size: 13px;
   -webkit-box-pack: right;
@@ -390,6 +394,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    max-width: unset;
   }
 }
 
